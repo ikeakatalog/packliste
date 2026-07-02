@@ -337,7 +337,8 @@
   .item input[type=checkbox]:checked::before{transform:scale(1);}
   .item input[type=checkbox]:active{transform:scale(0.9);}
 
-  .item span{flex:1;font-size:0.97rem;line-height:1.35;}
+  .item span{flex:1;font-size:0.97rem;line-height:1.35;cursor:pointer;border-radius:0.4rem;transition:opacity .15s ease, background .15s ease;}
+  .item span.pressing{opacity:0.5;background:var(--chip-bg);}
   .item.checked span{text-decoration:line-through;color:var(--muted-light);}
   .item .del{
     all:unset;cursor:pointer;color:var(--muted);
@@ -783,6 +784,34 @@ function renderCategories(){
 
       const span = document.createElement("span");
       span.textContent = item.text;
+      span.title = "Doppelklick oder gedrückt halten zum Umbenennen";
+
+      span.addEventListener("dblclick", ()=> renameItem(cat, itemId, item.text));
+
+      let pressTimer = null;
+      let pressStart = null;
+      const clearPress = ()=>{
+        if(pressTimer){ clearTimeout(pressTimer); pressTimer = null; }
+        span.classList.remove("pressing");
+      };
+      span.addEventListener("pointerdown", (e)=>{
+        if(e.pointerType === "mouse" && e.button !== 0) return;
+        pressStart = { x: e.clientX, y: e.clientY };
+        span.classList.add("pressing");
+        pressTimer = setTimeout(()=>{
+          span.classList.remove("pressing");
+          pressTimer = null;
+          renameItem(cat, itemId, item.text);
+        }, 1000);
+      });
+      span.addEventListener("pointermove", (e)=>{
+        if(!pressStart) return;
+        const dx = e.clientX - pressStart.x, dy = e.clientY - pressStart.y;
+        if(Math.sqrt(dx*dx + dy*dy) > 12) clearPress();
+      });
+      ["pointerup","pointerleave","pointercancel"].forEach(evt=>
+        span.addEventListener(evt, clearPress)
+      );
 
       const del = document.createElement("button");
       del.className = "del";
@@ -840,6 +869,13 @@ async function toggleItem(cat, itemId, checked){
 async function deleteItem(cat, itemId){
   const ref = doc(db, "lists", activeListId);
   await updateDoc(ref, { [`categories.${cat}.${itemId}`]: deleteField() });
+}
+
+async function renameItem(cat, itemId, oldText){
+  const newText = prompt("Artikel umbenennen:", oldText);
+  if(!newText || !newText.trim() || newText.trim() === oldText) return;
+  const ref = doc(db, "lists", activeListId);
+  await updateDoc(ref, { [`categories.${cat}.${itemId}.text`]: newText.trim() });
 }
 
 async function addItemToCategory(cat, inputEl){
