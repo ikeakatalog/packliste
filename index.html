@@ -3,56 +3,58 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Packliste</title>
+<title>CheckCheck</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --scale: 1;
-    --ink:#241f2e;
-    --muted:#8b8496;
-    --muted-light:#a9a3b5;
-    --accent1:#7b6cf0;
-    --accent2:#ef7ba0;
-    --accent3:#5ad1c8;
-    --done:#3ecf8e;
-    --danger:#f0577b;
-    --glass-bg: rgba(255,255,255,0.55);
-    --glass-bg-strong: rgba(255,255,255,0.72);
-    --glass-border: rgba(255,255,255,0.6);
-    --glass-shadow: 0 8px 32px rgba(90,60,150,0.14);
-    --field-bg: rgba(255,255,255,0.75);
-    --btn-secondary-bg: rgba(255,255,255,0.7);
-    --btn-secondary-bg-hover: rgba(255,255,255,0.92);
-    --chip-bg: rgba(139,132,150,0.12);
-    --divider: rgba(139,132,150,0.14);
+    --spring: cubic-bezier(0.34,1.56,0.64,1);
+    --bg-0:#f5f5f7;
+    --bg-wash-1: rgba(108,92,231,0.10);
+    --bg-wash-2: rgba(255,122,89,0.09);
+    --ink:#1d1d1f;
+    --muted:#6e6e73;
+    --muted-light:#9a9aa0;
+    --accent:#6c5ce7;
+    --accent-2:#5947d6;
+    --done:#34c759;
+    --danger:#ff3b30;
+    --glass-bg: rgba(255,255,255,0.66);
+    --glass-bg-strong: rgba(255,255,255,0.84);
+    --glass-border: rgba(0,0,0,0.07);
+    --glass-shadow: 0 10px 30px rgba(0,0,0,0.07), 0 2px 8px rgba(0,0,0,0.04);
+    --field-bg: rgba(255,255,255,0.92);
+    --btn-secondary-bg: rgba(0,0,0,0.045);
+    --btn-secondary-bg-hover: rgba(0,0,0,0.08);
+    --chip-bg: rgba(0,0,0,0.055);
+    --divider: rgba(0,0,0,0.08);
     --page-bg:
-      radial-gradient(circle at 12% 8%, rgba(123,108,240,0.35), transparent 45%),
-      radial-gradient(circle at 88% 15%, rgba(239,123,160,0.32), transparent 42%),
-      radial-gradient(circle at 20% 90%, rgba(90,209,200,0.30), transparent 45%),
-      radial-gradient(circle at 90% 85%, rgba(255,205,120,0.28), transparent 40%),
-      linear-gradient(160deg, #f4f1fb 0%, #f7f0f5 45%, #eef8f6 100%);
+      radial-gradient(circle at 12% 0%, var(--bg-wash-1), transparent 42%),
+      radial-gradient(circle at 100% 25%, var(--bg-wash-2), transparent 40%),
+      var(--bg-0);
   }
   html[data-theme="dark"]{
-    --ink:#f1eef8;
-    --muted:#aca6c4;
-    --muted-light:#8f8aa8;
-    --glass-bg: rgba(34,28,54,0.55);
-    --glass-bg-strong: rgba(34,28,54,0.78);
-    --glass-border: rgba(255,255,255,0.10);
-    --glass-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    --bg-0:#000000;
+    --bg-wash-1: rgba(108,92,231,0.18);
+    --bg-wash-2: rgba(255,122,89,0.12);
+    --ink:#f5f5f7;
+    --muted:#98989d;
+    --muted-light:#77777c;
+    --accent:#8b7cf6;
+    --accent-2:#7566e8;
+    --done:#32d74b;
+    --danger:#ff453a;
+    --glass-bg: rgba(28,28,30,0.66);
+    --glass-bg-strong: rgba(30,30,32,0.88);
+    --glass-border: rgba(255,255,255,0.09);
+    --glass-shadow: 0 10px 30px rgba(0,0,0,0.55);
     --field-bg: rgba(255,255,255,0.07);
     --btn-secondary-bg: rgba(255,255,255,0.08);
-    --btn-secondary-bg-hover: rgba(255,255,255,0.15);
+    --btn-secondary-bg-hover: rgba(255,255,255,0.14);
     --chip-bg: rgba(255,255,255,0.08);
-    --divider: rgba(255,255,255,0.10);
-    --page-bg:
-      radial-gradient(circle at 12% 8%, rgba(123,108,240,0.28), transparent 45%),
-      radial-gradient(circle at 88% 15%, rgba(239,123,160,0.22), transparent 42%),
-      radial-gradient(circle at 20% 90%, rgba(90,209,200,0.20), transparent 45%),
-      radial-gradient(circle at 90% 85%, rgba(255,205,120,0.16), transparent 40%),
-      linear-gradient(160deg, #14101f 0%, #1a1428 45%, #101a1c 100%);
+    --divider: rgba(255,255,255,0.09);
   }
   *{box-sizing:border-box;}
   html{font-size:calc(16px * var(--scale)); scroll-behavior:smooth;}
@@ -67,21 +69,21 @@
     position:relative;
     transition:background .3s ease, color .3s ease;
   }
-  .wrap{max-width:44rem;margin:0 auto;position:relative;z-index:1;}
+  .wrap{max-width:40rem;margin:0 auto;position:relative;z-index:1;}
 
   .glass{
     background:var(--glass-bg);
-    backdrop-filter: blur(18px) saturate(160%);
-    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
     border:1px solid var(--glass-border);
-    border-radius:1.4rem;
+    border-radius:1.3rem;
     box-shadow:var(--glass-shadow);
     transition:background .3s ease, border-color .3s ease;
   }
 
   header.glass{
-    padding:1.3rem 1.4rem;
-    margin-bottom:1rem;
+    padding:1.2rem 1.3rem;
+    margin-bottom:0.9rem;
     display:flex;
     justify-content:space-between;
     align-items:flex-start;
@@ -90,90 +92,92 @@
   }
   .title-block h1{
     font-family:'Outfit',sans-serif;
-    font-size:1.7rem;
-    font-weight:700;
-    margin:0 0 0.2rem;
-    background:linear-gradient(100deg, var(--accent1), var(--accent2) 60%, var(--accent3));
+    font-size:1.55rem;
+    font-weight:800;
+    margin:0 0 0.15rem;
+    letter-spacing:-0.02em;
+    display:flex;align-items:center;gap:0.4rem;
+  }
+  .title-block h1 .brand{
+    background:linear-gradient(100deg, var(--accent), var(--accent-2));
     -webkit-background-clip:text;
     background-clip:text;
     color:transparent;
-    letter-spacing:-0.01em;
   }
-  .sub{color:var(--muted);font-size:0.9rem;margin:0;}
-  .status{font-size:0.78rem;color:var(--muted);margin-top:0.5rem;display:flex;align-items:center;gap:0.4rem;}
-  .status .dot{width:0.5rem;height:0.5rem;border-radius:50%;background:var(--danger);flex-shrink:0;}
-  .status.live .dot{background:var(--done);box-shadow:0 0 0 0 rgba(62,207,142,0.6);animation:pulse 2s infinite;}
+  .sub{color:var(--muted);font-size:0.88rem;margin:0;}
+  .status{font-size:0.76rem;color:var(--muted);margin-top:0.5rem;display:flex;align-items:center;gap:0.4rem;}
+  .status .dot{width:0.45rem;height:0.45rem;border-radius:50%;background:var(--danger);flex-shrink:0;}
+  .status.live .dot{background:var(--done);box-shadow:0 0 0 0 rgba(52,199,89,0.6);animation:pulse 2s infinite;}
   @keyframes pulse{
-    0%{box-shadow:0 0 0 0 rgba(62,207,142,0.55);}
-    70%{box-shadow:0 0 0 7px rgba(62,207,142,0);}
-    100%{box-shadow:0 0 0 0 rgba(62,207,142,0);}
+    0%{box-shadow:0 0 0 0 rgba(52,199,89,0.55);}
+    70%{box-shadow:0 0 0 7px rgba(52,199,89,0);}
+    100%{box-shadow:0 0 0 0 rgba(52,199,89,0);}
   }
 
   .header-controls{display:flex;align-items:center;gap:0.5rem;flex-shrink:0;}
 
   .theme-toggle{
     all:unset;
-    width:2.4rem;height:2.4rem;
+    width:2.3rem;height:2.3rem;
     display:flex;align-items:center;justify-content:center;
     border-radius:999px;
-    background:rgba(255,255,255,0.6);
+    background:var(--btn-secondary-bg);
     border:1px solid var(--glass-border);
     cursor:pointer;
-    font-size:1.05rem;
+    font-size:1rem;
     flex-shrink:0;
+    transition:transform .15s var(--spring), background .15s ease;
   }
-  html[data-theme="dark"] .theme-toggle{background:rgba(255,255,255,0.08);}
-  .theme-toggle:active{transform:scale(0.92);}
+  .theme-toggle:active{transform:scale(0.9);}
 
   .fontctl{
-    display:flex;align-items:center;gap:0.3rem;
-    background:rgba(255,255,255,0.6);
+    display:flex;align-items:center;gap:0.25rem;
+    background:var(--btn-secondary-bg);
     border:1px solid var(--glass-border);
     border-radius:999px;
     padding:0.2rem;
     flex-shrink:0;
   }
-  html[data-theme="dark"] .fontctl{background:rgba(255,255,255,0.08);}
   .fontctl button{
     all:unset;
-    width:2rem;height:2rem;
+    width:1.9rem;height:1.9rem;
     display:flex;align-items:center;justify-content:center;
     border-radius:999px;
     font-family:'Outfit',sans-serif;
     font-weight:700;
     color:var(--ink);
     cursor:pointer;
-    font-size:1.05rem;
+    font-size:1.02rem;
     line-height:1;
   }
-  .fontctl button:active{background:rgba(123,108,240,0.25);}
+  .fontctl button:active{background:rgba(108,92,231,0.22);}
   .fontctl-value{
-    font-size:0.72rem;font-weight:600;color:var(--muted);
-    min-width:2.4rem;text-align:center;cursor:pointer;
+    font-size:0.7rem;font-weight:600;color:var(--muted);
+    min-width:2.3rem;text-align:center;cursor:pointer;
     user-select:none;
   }
 
   .floating-bar{
     position:fixed;
-    top:0.75rem;
+    top:0.7rem;
     left:50%;
-    width:min(94%, 44rem);
+    width:min(94%, 40rem);
     z-index:200;
     display:flex;
     align-items:center;
-    gap:0.75rem;
+    gap:0.7rem;
     flex-wrap:wrap;
-    padding:0.55rem 0.8rem;
+    padding:0.5rem 0.75rem;
     background:var(--glass-bg-strong);
-    backdrop-filter: blur(20px) saturate(160%);
-    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    backdrop-filter: blur(22px) saturate(160%);
+    -webkit-backdrop-filter: blur(22px) saturate(160%);
     border:1px solid var(--glass-border);
-    border-radius:1.2rem;
+    border-radius:1.1rem;
     box-shadow:var(--glass-shadow);
     transform:translate(-50%, -140%);
     opacity:0;
     pointer-events:none;
-    transition:transform .25s ease, opacity .25s ease, background .3s ease;
+    transition:transform .25s var(--spring), opacity .25s ease, background .3s ease;
   }
   .floating-bar.visible{
     transform:translate(-50%, 0);
@@ -181,206 +185,271 @@
     pointer-events:auto;
   }
   .floating-bar .progress-row{flex:1;min-width:8rem;display:flex;align-items:center;gap:0.6rem;}
-  .floating-bar .progress-text{font-size:0.78rem;}
+  .floating-bar .progress-text{font-size:0.76rem;}
   .floating-bar .fontctl{background:var(--chip-bg);}
 
-  .toolbar{
+  .list-bar{
     display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;
-    padding:0.9rem;margin:0.9rem 0;
+    padding:0.75rem;margin:0.8rem 0;
   }
-  .toolbar label{font-size:0.8rem;color:var(--muted);margin-right:0.1rem;white-space:nowrap;}
   select, input[type=text]{
     font-family:'Inter',sans-serif;
-    font-size:0.95rem;padding:0.6rem 0.7rem;
+    font-size:0.94rem;padding:0.6rem 0.7rem;
     border:1px solid var(--glass-border);
     border-radius:0.8rem;
     background:var(--field-bg);
     color:var(--ink);
-    min-height:2.6rem;
+    min-height:2.5rem;
   }
-  select:focus, input[type=text]:focus{ outline:2px solid var(--accent1); outline-offset:1px;}
-  select#listSelect{flex:1;min-width:9rem;}
+  select:focus, input[type=text]:focus{ outline:2px solid var(--accent); outline-offset:1px;}
+  select#listSelect{flex:1;min-width:8rem;}
+  .list-bar-actions{display:flex;gap:0.4rem;flex-shrink:0;}
 
   button{
     font-family:'Inter',sans-serif;
     font-weight:600;
-    font-size:0.86rem;padding:0.6rem 0.95rem;border:none;border-radius:0.8rem;
-    background:linear-gradient(120deg, var(--accent1), var(--accent2));
+    font-size:0.86rem;padding:0.62rem 1rem;border:none;border-radius:0.85rem;
+    background:linear-gradient(135deg, var(--accent), var(--accent-2));
     color:#fff;cursor:pointer;
-    min-height:2.6rem;
-    box-shadow:0 4px 14px rgba(123,108,240,0.28);
-    transition:transform .12s ease, box-shadow .12s ease, background .2s ease;
+    min-height:2.5rem;
+    box-shadow:0 4px 14px rgba(108,92,231,0.28);
+    transition:transform .15s var(--spring), box-shadow .15s ease, background .2s ease;
   }
-  button:hover{transform:translateY(-1px); box-shadow:0 6px 18px rgba(123,108,240,0.36);}
-  button:active{transform:translateY(0);}
+  button:hover{transform:translateY(-1px); box-shadow:0 6px 18px rgba(108,92,231,0.36);}
+  button:active{transform:translateY(0) scale(0.97);}
   button.secondary{background:var(--btn-secondary-bg);color:var(--ink);box-shadow:none;border:1px solid var(--glass-border);}
-  button.secondary:hover{background:var(--btn-secondary-bg-hover); box-shadow:0 4px 12px rgba(90,60,150,0.12);}
-  button.danger{background:linear-gradient(120deg, var(--danger), #e5486e); box-shadow:0 4px 14px rgba(240,87,123,0.3);}
+  button.secondary:hover{background:var(--btn-secondary-bg-hover); box-shadow:none;}
+  button.danger{background:linear-gradient(135deg, var(--danger), #d92c22); box-shadow:0 4px 14px rgba(255,59,48,0.3);}
+  button.small{padding:0.45rem 0.8rem;min-height:2.1rem;font-size:0.8rem;}
   button.icon-btn{
-    min-height:auto;width:2.1rem;height:2.1rem;padding:0;
+    min-height:auto;width:2.2rem;height:2.2rem;padding:0;
     display:flex;align-items:center;justify-content:center;
     background:var(--btn-secondary-bg);color:var(--ink);box-shadow:none;
-    border:1px solid var(--glass-border);font-size:0.85rem;flex-shrink:0;
+    border:1px solid var(--glass-border);font-size:0.9rem;flex-shrink:0;
   }
   button.icon-btn:hover{background:var(--btn-secondary-bg-hover);}
+  button.icon-btn.danger{background:var(--btn-secondary-bg);color:var(--danger);box-shadow:none;}
+  button.icon-btn.danger:hover{background:rgba(255,59,48,0.14);}
   button.icon-btn:disabled{opacity:0.3;}
-  button:disabled{opacity:0.5;cursor:default;transform:none;}
+  button:disabled{opacity:0.45;cursor:default;transform:none;}
 
   .share-row{
     display:flex;gap:0.5rem;align-items:center;margin:0.7rem 0;flex-wrap:wrap;
-    padding:0.7rem 0.9rem;
+    padding:0.65rem 0.8rem;
   }
   .share-row input{flex:1;min-width:11rem;font-size:0.8rem;color:var(--muted);background:var(--field-bg);}
 
-  .progress-card{padding:0.9rem 1.1rem;margin:0.9rem 0;}
+  .progress-card{padding:0.9rem 1rem;margin:0.8rem 0;}
   .progress-row{display:flex;align-items:center;gap:0.8rem;}
-  .progress-bar{flex:1;height:0.7rem;background:var(--chip-bg);border-radius:999px;overflow:hidden;}
+  .progress-bar{flex:1;height:0.65rem;background:var(--chip-bg);border-radius:999px;overflow:hidden;}
   .progress-fill{
     height:100%;
-    background:linear-gradient(90deg, var(--accent3), var(--done));
+    background:linear-gradient(90deg, var(--accent), var(--done));
     width:0%;
     border-radius:999px;
-    transition:width .3s ease;
+    transition:width .35s var(--spring);
   }
-  .progress-text{font-size:0.85rem;color:var(--muted);white-space:nowrap;font-weight:600;}
+  .progress-text{font-size:0.84rem;color:var(--muted);white-space:nowrap;font-weight:600;}
+  .progress-actions{display:flex;align-items:center;justify-content:space-between;gap:0.5rem;margin-top:0.7rem;}
+  .section-label{font-size:0.82rem;color:var(--muted);font-weight:600;}
 
-  .cat-toolbar{
-    display:flex;align-items:center;justify-content:space-between;gap:0.5rem;
-    padding:0.8rem 1rem;margin:1rem 0 0.9rem;
-    flex-wrap:wrap;
+  /* Category tree */
+  .cat-node{margin-bottom:0;}
+  .cat-node.cat-top{overflow:hidden;}
+  .cat-node.cat-sub{
+    margin:0.35rem 0;
+    border-left:2px solid var(--cat-color, var(--divider));
+    padding-left:0.65rem;
+    border-radius:0.3rem;
   }
-  .cat-toolbar span{font-size:0.85rem;color:var(--muted);}
 
-  .category{
-    margin-bottom:0.9rem;
-    overflow:hidden;
-    position:relative;
-  }
-  .category::before{
-    content:"";
-    position:absolute;
-    left:0;top:0;bottom:0;
-    width:0.28rem;
-    background:linear-gradient(180deg, var(--accent1), var(--accent3));
-  }
-  .category:nth-of-type(2n)::before{background:linear-gradient(180deg, var(--accent2), var(--accent1));}
-  .category:nth-of-type(3n)::before{background:linear-gradient(180deg, var(--accent3), var(--accent2));}
+  .cat-header{display:flex;align-items:center;gap:0.45rem;padding:0.85rem 1rem;}
+  .cat-node.cat-sub > .cat-header{padding:0.4rem 0.3rem;}
 
-  .category-header{
-    display:flex;justify-content:space-between;align-items:center;
-    padding:0.8rem 1rem 0.8rem 1.3rem;
-    flex-wrap:wrap;
-    gap:0.5rem;
+  .drag-handle{
+    cursor:grab;color:var(--muted-light);opacity:0;transition:opacity .15s ease;
+    flex-shrink:0;font-size:0.95rem;width:1.05rem;text-align:center;touch-action:none;
+    user-select:none;
   }
-  .category-header .title-row{display:flex;align-items:center;gap:0.6rem;flex:1;min-width:8rem;cursor:pointer;user-select:none;}
-  .category-header .chevron{
-    display:inline-block;color:var(--muted);font-size:0.8rem;
-    transition:transform .2s ease;flex-shrink:0;width:0.9rem;
-  }
-  .category-header .chevron.collapsed{transform:rotate(-90deg);}
-  .category-header h2{
-    font-family:'Outfit',sans-serif;
-    font-size:1.02rem;font-weight:600;margin:0;
-  }
-  .category-header .count{
-    font-size:0.78rem;color:var(--muted);font-weight:600;
-    background:var(--chip-bg);
-    padding:0.2rem 0.55rem;
-    border-radius:999px;
-    flex-shrink:0;
-  }
-  .cat-actions{display:flex;gap:0.3rem;flex-shrink:0;}
+  .cat-header:hover .drag-handle, .item-row:hover .drag-handle, .item-row:focus-within .drag-handle{opacity:1;}
+  @media (hover:none){ .drag-handle{opacity:0.5;} }
+  .drag-handle:active{cursor:grabbing;}
 
-  .cat-progress{
-    height:0.35rem;
-    background:var(--chip-bg);
-    border-radius:999px;
-    overflow:hidden;
-    margin:0 1.1rem 0.7rem 1.3rem;
+  .chevron-btn{
+    all:unset;cursor:pointer;color:var(--muted);font-size:0.75rem;width:1.1rem;
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+    transition:transform .2s var(--spring);
   }
-  .cat-progress-fill{
+  .chevron-btn.collapsed{transform:rotate(-90deg);}
+
+  .cat-name{
+    all:unset;cursor:pointer;font-family:'Outfit',sans-serif;font-weight:600;
+    font-size:1.01rem;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .cat-node.cat-sub .cat-name{font-size:0.9rem;}
+
+  .count-badge{
+    font-size:0.7rem;font-weight:700;color:var(--muted);background:var(--chip-bg);
+    padding:0.15rem 0.5rem;border-radius:999px;flex-shrink:0;
+  }
+
+  .kebab-btn{
+    all:unset;cursor:pointer;width:1.8rem;height:1.8rem;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;color:var(--muted);
+    flex-shrink:0;font-size:1.15rem;
+  }
+  .kebab-btn:hover{background:var(--chip-bg);color:var(--ink);}
+
+  .mini-progress{height:0.3rem;background:var(--chip-bg);border-radius:999px;overflow:hidden;margin:0 1rem 0.65rem;}
+  .cat-node.cat-sub > .mini-progress{margin:0 0.3rem 0.45rem;}
+  .mini-progress-fill{
     height:100%;
-    background:linear-gradient(90deg, var(--accent3), var(--done));
+    background:linear-gradient(90deg, var(--cat-color, var(--accent)), var(--done));
     border-radius:999px;
-    transition:width .3s ease;
+    transition:width .35s var(--spring);
   }
 
-  .items{padding:0 1.1rem 0.8rem 1.3rem;}
-  .items.collapsed{display:none;}
-  .item{
-    display:flex;align-items:center;gap:0.75rem;padding:0.65rem 0;
-    border-bottom:1px solid var(--divider);
+  .children-wrap.collapsed{display:none;}
+  .children-list{display:flex;flex-direction:column;gap:0.3rem;padding:0 1rem 0.75rem 1.35rem;}
+  .cat-node.cat-sub > .children-wrap > .children-list{padding:0 0.15rem 0.5rem 0.9rem;}
+  .children-list.top-level{padding:0;gap:0.75rem;}
+  .children-list.top-level:empty{
+    display:flex;align-items:center;justify-content:center;text-align:center;
+    color:var(--muted);font-size:0.88rem;padding:2.4rem 1.2rem;
   }
-  .item:last-child{border-bottom:none;}
+  .children-list.top-level:empty::before{content:'Noch keine Kategorien — leg los mit „+ Kategorie" oben.';}
 
-  .item input[type=checkbox]{
+  .item-row{display:flex;align-items:center;gap:0.6rem;padding:0.5rem 0.15rem;border-bottom:1px solid var(--divider);}
+  .item-row.checked .item-text{text-decoration:line-through;color:var(--muted-light);}
+  .item-text{flex:1;font-size:0.95rem;line-height:1.35;cursor:pointer;min-width:0;overflow-wrap:anywhere;}
+
+  .item-row input[type=checkbox]{
     -webkit-appearance:none;appearance:none;
-    width:1.4rem;height:1.4rem;flex-shrink:0;
-    border-radius:50%;
-    border:2px solid rgba(123,108,240,0.45);
+    width:1.3rem;height:1.3rem;flex-shrink:0;
+    border-radius:0.42rem;
+    border:1.7px solid var(--muted-light);
     cursor:pointer;
     display:grid;place-content:center;
-    transition:background .15s ease, border-color .15s ease, transform .1s ease;
+    transition:background .15s var(--spring), border-color .15s ease, transform .1s ease;
   }
-  .item input[type=checkbox]::before{
+  .item-row input[type=checkbox]::before{
     content:"";
-    width:0.6rem;height:0.6rem;
-    border-radius:50%;
-    transform:scale(0);
-    transition:transform .15s ease;
+    width:0.72rem;height:0.72rem;
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 45% 68%);
     background:#fff;
+    transform:scale(0);
+    transition:transform .18s var(--spring);
   }
-  .item input[type=checkbox]:checked{
-    background:linear-gradient(120deg, var(--accent3), var(--done));
-    border-color:transparent;
-  }
-  .item input[type=checkbox]:checked::before{transform:scale(1);}
-  .item input[type=checkbox]:active{transform:scale(0.9);}
+  .item-row input[type=checkbox]:checked{background:linear-gradient(135deg, var(--accent), var(--done));border-color:transparent;}
+  .item-row input[type=checkbox]:checked::before{transform:scale(1);}
+  .item-row input[type=checkbox]:active{transform:scale(0.88);}
 
-  .item span{flex:1;font-size:0.97rem;line-height:1.35;cursor:pointer;border-radius:0.4rem;transition:opacity .15s ease, background .15s ease;}
-  .item span.pressing{opacity:0.5;background:var(--chip-bg);}
-  .item.checked span{text-decoration:line-through;color:var(--muted-light);}
-  .item .del{
-    all:unset;cursor:pointer;color:var(--muted);
-    width:1.8rem;height:1.8rem;flex-shrink:0;
-    display:flex;align-items:center;justify-content:center;
-    border-radius:50%;font-size:1rem;
-  }
-  .item .del:hover{color:#fff;background:var(--danger);}
-  .empty-cat{color:var(--muted);font-size:0.85rem;padding:0.4rem 0 0.8rem;font-style:italic;}
+  .empty-cat{color:var(--muted);font-size:0.83rem;padding:0.3rem 0 0.5rem;font-style:italic;}
 
-  .add-in-cat{
-    display:flex;gap:0.5rem;align-items:center;
-    margin-top:0.5rem;padding-top:0.6rem;
-    border-top:1px dashed var(--divider);
+  .add-row{display:flex;gap:0.5rem;align-items:center;margin-top:0.15rem;padding-top:0.5rem;border-top:1px dashed var(--divider);}
+  .add-row input[type=text]{flex:1;background:transparent;border:none;padding:0.35rem 0.1rem;min-height:auto;font-size:0.9rem;}
+  .add-row input[type=text]:focus{outline:none;}
+  .add-row .add-btn{min-height:auto;width:1.9rem;height:1.9rem;padding:0;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.05rem;flex-shrink:0;}
+  .add-subcat-ghost{all:unset;cursor:pointer;font-size:0.78rem;color:var(--muted);padding:0.3rem 0.15rem;margin-top:0.1rem;display:inline-block;}
+  .add-subcat-ghost:hover{color:var(--accent);}
+
+  .sortable-ghost{opacity:0.35;}
+  .sortable-drag{box-shadow:0 10px 26px rgba(0,0,0,0.22);border-radius:0.7rem;}
+
+  /* Sheets / modals */
+  .sheet-overlay{
+    position:fixed;inset:0;z-index:500;
+    background:rgba(0,0,0,0.32);
+    backdrop-filter:blur(4px);
+    display:flex;align-items:flex-end;justify-content:center;
+    opacity:0;pointer-events:none;
+    transition:opacity .2s ease;
+    padding:0.8rem;
   }
-  .add-in-cat input[type=text]{
-    flex:1;background:transparent;border:none;padding:0.4rem 0.1rem;
-    min-height:auto;font-size:0.92rem;
+  .sheet-overlay.visible{opacity:1;pointer-events:auto;}
+  .sheet{
+    width:min(100%, 25rem);
+    margin-bottom:0.6rem;
+    background:var(--glass-bg-strong);
+    backdrop-filter:blur(26px) saturate(160%);
+    -webkit-backdrop-filter:blur(26px) saturate(160%);
+    border:1px solid var(--glass-border);
+    border-radius:1.3rem;
+    box-shadow:0 24px 60px rgba(0,0,0,0.28);
+    padding:1.25rem 1.25rem 1rem;
+    transform:translateY(24px) scale(0.98);
+    transition:transform .28s var(--spring);
   }
-  .add-in-cat input[type=text]:focus{outline:none;}
-  .add-in-cat button{
-    min-height:auto;width:2rem;height:2rem;padding:0;border-radius:50%;
-    display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;
+  .sheet-overlay.visible .sheet{transform:translateY(0) scale(1);}
+  @media (min-width:30rem){
+    .sheet-overlay{align-items:center;}
+    .sheet{margin-bottom:0;}
+  }
+  .sheet-title{font-family:'Outfit',sans-serif;font-size:1.12rem;font-weight:700;margin:0 0 0.25rem;}
+  .sheet-message{color:var(--muted);font-size:0.88rem;margin:0 0 0.85rem;line-height:1.45;}
+  .sheet-field{margin-bottom:0.85rem;}
+  .sheet-field label{display:block;font-size:0.76rem;color:var(--muted);margin-bottom:0.32rem;font-weight:600;}
+  .sheet-field input[type=text]{width:100%;}
+  .sheet-radio-group{display:flex;flex-direction:column;gap:0.4rem;}
+  .sheet-radio{all:unset;box-sizing:border-box;cursor:pointer;padding:0.6rem 0.8rem;border-radius:0.8rem;border:1.5px solid var(--glass-border);font-size:0.88rem;}
+  .sheet-radio.selected{border-color:var(--accent);background:rgba(108,92,231,0.12);font-weight:600;}
+  .sheet-picker-list{display:flex;flex-direction:column;gap:0.2rem;max-height:15rem;overflow-y:auto;margin-bottom:0.85rem;}
+  .sheet-picker-item{all:unset;box-sizing:border-box;cursor:pointer;padding:0.6rem 0.75rem;border-radius:0.7rem;font-size:0.88rem;white-space:pre;width:100%;display:block;}
+  .sheet-picker-item:hover{background:var(--chip-bg);}
+  .sheet-actions{display:flex;gap:0.55rem;justify-content:flex-end;margin-top:0.3rem;}
+  .sheet-actions button{min-width:5.2rem;}
+
+  /* Kebab context menu */
+  .kebab-menu{
+    position:fixed;z-index:550;min-width:11.5rem;
+    background:var(--glass-bg-strong);
+    backdrop-filter:blur(22px) saturate(160%);
+    -webkit-backdrop-filter:blur(22px) saturate(160%);
+    border:1px solid var(--glass-border);
+    border-radius:0.9rem;
+    box-shadow:0 14px 32px rgba(0,0,0,0.22);
+    padding:0.35rem;
+    opacity:0;transform:scale(0.95) translateY(-4px);
+    transition:opacity .15s ease, transform .15s var(--spring);
+  }
+  .kebab-menu.visible{opacity:1;transform:scale(1) translateY(0);}
+  .kebab-menu-item{
+    all:unset;box-sizing:border-box;display:flex;align-items:center;gap:0.55rem;
+    width:100%;padding:0.55rem 0.7rem;border-radius:0.6rem;font-size:0.86rem;cursor:pointer;
+  }
+  .kebab-menu-item:hover{background:var(--chip-bg);}
+  .kebab-menu-item.danger{color:var(--danger);}
+  .kmi-icon{width:1.05rem;text-align:center;flex-shrink:0;opacity:0.85;}
+
+  /* Confetti */
+  .confetti-piece{
+    position:fixed;width:7px;height:7px;border-radius:2px;pointer-events:none;z-index:999;
+    animation:confetti-fly .85s cubic-bezier(0.2,0.8,0.4,1) forwards;
+  }
+  @keyframes confetti-fly{
+    0%{transform:translate(0,0) rotate(0deg);opacity:1;}
+    100%{transform:translate(var(--dx),var(--dy)) rotate(var(--rot));opacity:0;}
   }
 
-  .footer-actions{display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:1.3rem;}
-  .hint{font-size:0.78rem;color:var(--muted);margin-top:0.6rem;text-align:center;}
+  .footer-actions{display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:1.2rem;}
+  .hint{font-size:0.76rem;color:var(--muted);margin-top:0.6rem;text-align:center;}
 
   @media (max-width: 30rem){
     header.glass{flex-direction:column;}
     .header-controls{align-self:flex-end;}
-    .toolbar{flex-direction:column;align-items:stretch;}
-    .toolbar label{margin-bottom:-0.2rem;}
-    .toolbar select, .toolbar button{width:100%;}
+    .list-bar{flex-direction:column;align-items:stretch;}
+    .list-bar select{width:100%;}
+    .list-bar-actions{justify-content:flex-end;}
   }
 
   @media print{
-    .toolbar,.footer-actions,.share-row,.fontctl,.theme-toggle,.cat-toolbar,.cat-actions,.add-in-cat,.floating-bar{display:none;}
+    .list-bar,.footer-actions,.share-row,.fontctl,.theme-toggle,.progress-actions,
+    .drag-handle,.kebab-btn,.add-row,.add-subcat-ghost,.floating-bar,.sheet-overlay,.kebab-menu{display:none !important;}
     body{background:#fff;}
-    .glass{background:#fff;box-shadow:none;backdrop-filter:none;}
-    .category{break-inside:avoid;border:1px solid #ddd;}
-    .items.collapsed{display:block !important;}
+    .glass{background:#fff;box-shadow:none;backdrop-filter:none;border-color:#ddd;}
+    .cat-node.cat-top{break-inside:avoid;border:1px solid #ddd;}
+    .children-wrap.collapsed{display:block !important;}
   }
 </style>
 </head>
@@ -388,8 +457,8 @@
 <div class="wrap">
   <header class="glass">
     <div class="title-block">
-      <h1>🧳 Packliste</h1>
-      <p class="sub">Abhaken, ergänzen, teilen — in Echtzeit für alle sichtbar.</p>
+      <h1>✅ <span class="brand">CheckCheck</span></h1>
+      <p class="sub">Abhaken, organisieren, teilen — in Echtzeit für alle sichtbar.</p>
       <div class="status" id="statusLine"><span class="dot"></span><span class="statusText">Verbinde…</span></div>
     </div>
     <div class="header-controls">
@@ -414,13 +483,14 @@
     </div>
   </div>
 
-  <div class="toolbar glass">
-    <label for="listSelect">Liste:</label>
-    <select id="listSelect"></select>
-    <button id="newListBtn" class="secondary">+ Neue Liste</button>
-    <button id="renameListBtn" class="secondary">Umbenennen</button>
-    <button id="duplicateListBtn" class="secondary">Duplizieren</button>
-    <button id="deleteListBtn" class="danger">Löschen</button>
+  <div class="list-bar glass">
+    <select id="listSelect" aria-label="Liste auswählen"></select>
+    <div class="list-bar-actions">
+      <button class="icon-btn" id="newListBtn" title="Neue Liste" aria-label="Neue Liste">+</button>
+      <button class="icon-btn" id="renameListBtn" title="Liste umbenennen" aria-label="Liste umbenennen">✎</button>
+      <button class="icon-btn" id="duplicateListBtn" title="Liste duplizieren" aria-label="Liste duplizieren">⧉</button>
+      <button class="icon-btn danger" id="deleteListBtn" title="Liste löschen" aria-label="Liste löschen">🗑</button>
+    </div>
   </div>
 
   <div class="share-row glass">
@@ -433,11 +503,10 @@
       <div class="progress-bar"><div class="progress-fill js-progress-fill"></div></div>
       <div class="progress-text js-progress-text">0 / 0</div>
     </div>
-  </div>
-
-  <div class="cat-toolbar glass">
-    <span>Kategorien</span>
-    <button id="newCategoryBtn" class="secondary">+ Kategorie</button>
+    <div class="progress-actions">
+      <span class="section-label">Kategorien</span>
+      <button id="newCategoryBtn" class="secondary small">+ Kategorie</button>
+    </div>
   </div>
 
   <div id="categories"></div>
@@ -449,11 +518,12 @@
   <div class="hint">Alle Änderungen werden live mit jedem geteilt, der diesen Link öffnet.</div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
+
 <script>
 (function(){
   var root = document.documentElement;
 
-  // Font scale (multiple synced instances: header + floating bar)
   var SCALE_KEY = "packliste_fontscale";
   var MIN = 0.75, MAX = 1.8, STEP = 0.05;
   var scale = parseFloat(localStorage.getItem(SCALE_KEY)) || 1;
@@ -482,7 +552,6 @@
     });
   });
 
-  // Floating bar: show once the header has scrolled out of view
   var headerEl = document.querySelector("header.glass");
   var floatingBar = document.getElementById("floatingBar");
   if(headerEl && floatingBar && "IntersectionObserver" in window){
@@ -494,7 +563,6 @@
     io.observe(headerEl);
   }
 
-  // Theme
   var THEME_KEY = "packliste_theme";
   var stored = localStorage.getItem(THEME_KEY);
   var theme = stored || (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
@@ -521,7 +589,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
   getFirestore, collection, doc, setDoc, updateDoc, deleteDoc, deleteField,
-  onSnapshot, query, orderBy, serverTimestamp, getDocs
+  onSnapshot, query, orderBy, serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -537,72 +605,110 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const listsCol = collection(db, "lists");
 
-function uid(){
-  return "i" + Date.now().toString(36) + Math.random().toString(36).slice(2,8);
+function newId(prefix){
+  return (prefix || "n") + Date.now().toString(36) + Math.random().toString(36).slice(2,8);
 }
 
-const defaultCategoryOrder = [
-  "📄 Dokumente & Zahlungsmittel",
-  "👕 Kleidung",
-  "🏖️ Strandausrüstung",
-  "🧴 Hygieneartikel",
-  "💊 Reiseapotheke",
-  "🎮 Freizeit, Unterhaltung & Technik",
-  "📦 Sonstiges"
-];
+const PALETTE = ["#6c5ce7","#00b8a9","#ff7a59","#f0577b","#3ec1d3","#f5a623","#4c6fff","#2ed573"];
+function colorForId(id){
+  let h = 0;
+  for(let i=0;i<id.length;i++){ h = (h*31 + id.charCodeAt(i)) >>> 0; }
+  return PALETTE[h % PALETTE.length];
+}
 
-function itemsMap(list){
-  const map = {};
-  list.forEach(t => { map[uid()] = { text: t, checked: false }; });
-  return map;
+// ---------- Default template (new node model) ----------
+function buildTemplate(name, categoryDefs){
+  const nodes = {};
+  const childOrder = { root: [] };
+  categoryDefs.forEach(([catName, itemTexts])=>{
+    const catId = newId("c");
+    nodes[catId] = { type:"category", name: catName, parentId:"root" };
+    childOrder.root.push(catId);
+    const itemIds = itemTexts.map(text=>{
+      const id = newId("i");
+      nodes[id] = { type:"item", text, checked:false, parentId: catId };
+      return id;
+    });
+    childOrder[catId] = itemIds;
+  });
+  return { name, nodes, childOrder, createdAt: serverTimestamp() };
 }
 
 function defaultSommerurlaub(){
+  return buildTemplate("Sommerurlaub", [
+    ["📄 Dokumente & Zahlungsmittel", [
+      "Personalausweis oder Reisepass","Bahn- und Flugtickets",
+      "Gesundheitskarte und Notfallnummern","Nachweis der Reisekrankenversicherung",
+      "Nachweis über Reiseimpfungen (falls nötig)","Führerschein und Mietwagen-Voucher",
+      "Reiseunterlagen","Bargeld und Kreditkarte"
+    ]],
+    ["👕 Kleidung", [
+      "Luftige T-Shirts, Tops, Blusen, Hemden","Shorts, Röcke, Hosen, Kleider",
+      "Ggf. schickere Outfits","Leichter Pullover oder Strickjacke",
+      "Regenjacke oder dünner Windbreaker","Unterwäsche und Socken",
+      "Schlafanzug / leichte Nachtwäsche","Sport- und Wanderkleidung",
+      "Sonnenbrille mit UV-Schutz"
+    ]],
+    ["🏖️ Strandausrüstung", [
+      "Bikini, Badeanzug oder Badehose","Strandkleid, Kaftan oder Pareo",
+      "Strandtuch oder großes Badetuch","Beutel für nasse Badekleidung",
+      "Sonnenhut oder Cap","Strandmuschel","Schnorchelset oder Schwimmbrille",
+      "Badeschuhe / Flip-Flops"
+    ]],
+    ["🧴 Hygieneartikel", [
+      "Zahnbürste, Zahnpasta, Zahnseide","Shampoo und Duschgel",
+      "Haarbürste und Kamm","Cremes, Deo, Parfüm",
+      "Damenhygiene / Verhütungsmittel","Rasierer und Rasiergel",
+      "Kontaktlinsenzubehör","Sonnenschutz mit hohem LSF","After-Sun-Lotion"
+    ]],
+    ["💊 Reiseapotheke", [
+      "Persönliche Medikamente (inkl. Reserve)","Schmerzmittel (Ibuprofen/Paracetamol)",
+      "Mittel gegen Durchfall, Verstopfung, Reisekrankheit","Insekten- und Mückenschutz",
+      "Gel gegen Juckreiz/Insektenstiche","Wunddesinfektion, Pflaster, Blasenpflaster",
+      "Fieberthermometer","Nasenspray und Halsschmerztabletten"
+    ]],
+    ["🎮 Freizeit, Unterhaltung & Technik", [
+      "Smartphone und Ladekabel","Kopfhörer","Powerbank","Kamera","Reiseadapter",
+      "Bücher oder E-Book-Reader","Nintendo Switch","PlayStation Controller","Hängematte"
+    ]],
+    ["📦 Sonstiges", []]
+  ]);
+}
+
+function blankList(name){
+  return { name, nodes:{}, childOrder:{ root: [] }, createdAt: serverTimestamp() };
+}
+
+// ---------- Migration from the old flat categories-map format ----------
+function isOldFormat(data){
+  return !!data && !data.nodes && !!data.categories;
+}
+function migrateListData(data){
+  const nodes = {};
+  const childOrder = { root: [] };
+  const order = data.categoryOrder || Object.keys(data.categories || {});
+  order.forEach(catName=>{
+    if(!data.categories || !(catName in data.categories)) return;
+    const catId = newId("c");
+    nodes[catId] = { type:"category", name: catName, parentId:"root" };
+    childOrder.root.push(catId);
+    const items = data.categories[catName] || {};
+    const itemIds = [];
+    Object.values(items).forEach(item=>{
+      const itemId = newId("i");
+      nodes[itemId] = { type:"item", text: item.text, checked: !!item.checked, parentId: catId };
+      itemIds.push(itemId);
+    });
+    childOrder[catId] = itemIds;
+  });
   return {
-    name: "Sommerurlaub",
-    categoryOrder: defaultCategoryOrder,
-    categories: {
-      "📄 Dokumente & Zahlungsmittel": itemsMap([
-        "Personalausweis oder Reisepass","Bahn- und Flugtickets",
-        "Gesundheitskarte und Notfallnummern","Nachweis der Reisekrankenversicherung",
-        "Nachweis über Reiseimpfungen (falls nötig)","Führerschein und Mietwagen-Voucher",
-        "Reiseunterlagen","Bargeld und Kreditkarte"
-      ]),
-      "👕 Kleidung": itemsMap([
-        "Luftige T-Shirts, Tops, Blusen, Hemden","Shorts, Röcke, Hosen, Kleider",
-        "Ggf. schickere Outfits","Leichter Pullover oder Strickjacke",
-        "Regenjacke oder dünner Windbreaker","Unterwäsche und Socken",
-        "Schlafanzug / leichte Nachtwäsche","Sport- und Wanderkleidung",
-        "Sonnenbrille mit UV-Schutz"
-      ]),
-      "🏖️ Strandausrüstung": itemsMap([
-        "Bikini, Badeanzug oder Badehose","Strandkleid, Kaftan oder Pareo",
-        "Strandtuch oder großes Badetuch","Beutel für nasse Badekleidung",
-        "Sonnenhut oder Cap","Strandmuschel","Schnorchelset oder Schwimmbrille",
-        "Badeschuhe / Flip-Flops"
-      ]),
-      "🧴 Hygieneartikel": itemsMap([
-        "Zahnbürste, Zahnpasta, Zahnseide","Shampoo und Duschgel",
-        "Haarbürste und Kamm","Cremes, Deo, Parfüm",
-        "Damenhygiene / Verhütungsmittel","Rasierer und Rasiergel",
-        "Kontaktlinsenzubehör","Sonnenschutz mit hohem LSF","After-Sun-Lotion"
-      ]),
-      "💊 Reiseapotheke": itemsMap([
-        "Persönliche Medikamente (inkl. Reserve)","Schmerzmittel (Ibuprofen/Paracetamol)",
-        "Mittel gegen Durchfall, Verstopfung, Reisekrankheit","Insekten- und Mückenschutz",
-        "Gel gegen Juckreiz/Insektenstiche","Wunddesinfektion, Pflaster, Blasenpflaster",
-        "Fieberthermometer","Nasenspray und Halsschmerztabletten"
-      ]),
-      "🎮 Freizeit, Unterhaltung & Technik": itemsMap([
-        "Smartphone und Ladekabel","Kopfhörer","Powerbank","Kamera","Reiseadapter",
-        "Bücher oder E-Book-Reader","Nintendo Switch","PlayStation Controller","Hängematte"
-      ]),
-      "📦 Sonstiges": {}
-    },
-    createdAt: serverTimestamp()
+    name: data.name || "(ohne Namen)",
+    nodes, childOrder,
+    createdAt: data.createdAt || serverTimestamp()
   };
 }
 
+// ---------- DOM references ----------
 const listSelect = document.getElementById("listSelect");
 const categoriesEl = document.getElementById("categories");
 const statusLine = document.getElementById("statusLine");
@@ -615,31 +721,31 @@ function setProgress(done, total){
   document.querySelectorAll(".js-progress-text").forEach(el => el.textContent = `${done} / ${total}`);
 }
 
-let allLists = {};        // id -> {name, ...}
+let allLists = {};
 let activeListId = null;
 let activeListData = null;
 let unsubActiveList = null;
-const draftInputs = {};   // category name -> in-progress "add item" text
-let collapsedSet = new Set(); // category names collapsed for the current list (local, per device)
+const draftInputs = {};
+let collapsedSet = new Set();
+let celebrated = new Set();
+let sortables = [];
+let pendingCelebrations = [];
 
 function collapsedStorageKey(id){ return "packliste_collapsed_" + id; }
-
 function loadCollapsed(id){
   try{
     const raw = localStorage.getItem(collapsedStorageKey(id));
     collapsedSet = new Set(raw ? JSON.parse(raw) : []);
   }catch(e){ collapsedSet = new Set(); }
 }
-
 function saveCollapsed(){
   if(!activeListId) return;
   localStorage.setItem(collapsedStorageKey(activeListId), JSON.stringify([...collapsedSet]));
 }
-
-function toggleCategoryCollapsed(cat){
-  if(collapsedSet.has(cat)) collapsedSet.delete(cat); else collapsedSet.add(cat);
+function toggleCollapsed(nodeId){
+  if(collapsedSet.has(nodeId)) collapsedSet.delete(nodeId); else collapsedSet.add(nodeId);
   saveCollapsed();
-  renderCategories();
+  renderTree();
 }
 
 function setStatus(text, live){
@@ -651,7 +757,6 @@ function getListIdFromUrl(){
   const params = new URLSearchParams(location.search);
   return params.get("list");
 }
-
 function setListIdInUrl(id){
   const url = new URL(location.href);
   url.searchParams.set("list", id);
@@ -670,186 +775,683 @@ function renderListSelect(){
   });
 }
 
-function escapeHtml(s){
-  const d = document.createElement("div");
-  d.textContent = s;
-  return d.innerHTML;
+function docRef(){ return doc(db, "lists", activeListId); }
+function getNodes(){ return (activeListData && activeListData.nodes) || {}; }
+function getChildOrderMap(){ return (activeListData && activeListData.childOrder) || {}; }
+function childrenOf(parentId){
+  const order = getChildOrderMap()[parentId] || [];
+  const nodes = getNodes();
+  return order.filter(id => nodes[id]);
 }
 
-function currentOrder(){
-  return (activeListData && activeListData.categoryOrder) || defaultCategoryOrder;
+function computeProgress(nodeId){
+  const nodes = getNodes();
+  let done = 0, total = 0;
+  childrenOf(nodeId).forEach(id=>{
+    const n = nodes[id];
+    if(!n) return;
+    if(n.type === "item"){
+      total++; if(n.checked) done++;
+    } else {
+      const sub = computeProgress(id);
+      done += sub.done; total += sub.total;
+    }
+  });
+  return { done, total };
 }
 
-function renderCategories(){
-  // Preserve focus/selection on an in-category "add item" input across live re-renders
-  let focusedCat = null, focusedSelStart = null;
+function collectSubtree(nodeId){
+  const result = [nodeId];
+  childrenOf(nodeId).forEach(id => result.push(...collectSubtree(id)));
+  return result;
+}
+
+function wouldCreateCycle(draggedId, targetParentId){
+  if(targetParentId === draggedId) return true;
+  const nodes = getNodes();
+  let cur = targetParentId;
+  let guard = 0;
+  while(cur && cur !== "root" && guard++ < 500){
+    const n = nodes[cur];
+    if(!n || !n.parentId) break;
+    if(n.parentId === draggedId) return true;
+    cur = n.parentId;
+  }
+  return false;
+}
+
+// ---------- Mutations ----------
+async function setChecked(itemId, checked){
+  await updateDoc(docRef(), { [`nodes.${itemId}.checked`]: checked });
+}
+async function renameNode(nodeId, newValue, isCategory){
+  const field = isCategory ? "name" : "text";
+  await updateDoc(docRef(), { [`nodes.${nodeId}.${field}`]: newValue });
+}
+async function addItem(parentId, text){
+  const order = [...childrenOf(parentId), null];
+  const id = newId("i");
+  order[order.length-1] = id;
+  await updateDoc(docRef(), {
+    [`nodes.${id}`]: { type:"item", text, checked:false, parentId },
+    [`childOrder.${parentId}`]: order
+  });
+  return id;
+}
+async function addCategory(parentId, name){
+  const id = newId("c");
+  const order = [...childrenOf(parentId), id];
+  const updates = {
+    [`nodes.${id}`]: { type:"category", name, parentId },
+    [`childOrder.${parentId}`]: order,
+    [`childOrder.${id}`]: []
+  };
+  await updateDoc(docRef(), updates);
+  return id;
+}
+async function deleteNode(nodeId){
+  const nodes = getNodes();
+  const parentId = nodes[nodeId] ? nodes[nodeId].parentId : null;
+  const toDelete = collectSubtree(nodeId);
+  const updates = {};
+  toDelete.forEach(id=>{
+    updates[`nodes.${id}`] = deleteField();
+    updates[`childOrder.${id}`] = deleteField();
+  });
+  if(parentId){
+    updates[`childOrder.${parentId}`] = childrenOf(parentId).filter(id => id !== nodeId);
+  }
+  await updateDoc(docRef(), updates);
+}
+async function moveNode(nodeId, fromParentId, toParentId, newIndex){
+  if(fromParentId === toParentId){
+    const order = childrenOf(fromParentId).filter(id => id !== nodeId);
+    order.splice(newIndex, 0, nodeId);
+    await updateDoc(docRef(), { [`childOrder.${fromParentId}`]: order });
+  } else {
+    const fromOrder = childrenOf(fromParentId).filter(id => id !== nodeId);
+    const toOrder = childrenOf(toParentId).filter(id => id !== nodeId);
+    toOrder.splice(newIndex, 0, nodeId);
+    await updateDoc(docRef(), {
+      [`childOrder.${fromParentId}`]: fromOrder,
+      [`childOrder.${toParentId}`]: toOrder,
+      [`nodes.${nodeId}.parentId`]: toParentId
+    });
+  }
+}
+async function duplicateNode(nodeId){
+  const nodes = getNodes();
+  const original = nodes[nodeId];
+  if(!original) return;
+  const parentId = original.parentId;
+  const updates = {};
+  function recurse(id, newParentId, isTop){
+    const n = nodes[id];
+    const nid = newId(n.type === "category" ? "c" : "i");
+    const cloned = Object.assign({}, n, { parentId: newParentId });
+    if(isTop && n.type === "category") cloned.name = n.name + " (Kopie)";
+    updates[`nodes.${nid}`] = cloned;
+    const kids = childrenOf(id);
+    const newKidIds = kids.map(k => recurse(k, nid, false));
+    if(n.type === "category") updates[`childOrder.${nid}`] = newKidIds;
+    return nid;
+  }
+  const newRootId = recurse(nodeId, parentId, true);
+  const order = childrenOf(parentId);
+  const idx = order.indexOf(nodeId);
+  const newOrder = [...order];
+  newOrder.splice(idx+1, 0, newRootId);
+  updates[`childOrder.${parentId}`] = newOrder;
+  await updateDoc(docRef(), updates);
+}
+
+// ---------- Sheets ----------
+function buildSheetShell(title, message){
+  const overlay = document.createElement("div");
+  overlay.className = "sheet-overlay";
+  const sheet = document.createElement("div");
+  sheet.className = "sheet";
+  const h = document.createElement("h3");
+  h.className = "sheet-title"; h.textContent = title;
+  sheet.appendChild(h);
+  if(message){
+    const p = document.createElement("p");
+    p.className = "sheet-message"; p.textContent = message;
+    sheet.appendChild(p);
+  }
+  overlay.appendChild(sheet);
+  return { overlay, sheet };
+}
+
+function showTextSheet({ title, label, value="", placeholder="", confirmLabel="Speichern" }){
+  return new Promise(resolve=>{
+    const { overlay, sheet } = buildSheetShell(title);
+    const field = document.createElement("div");
+    field.className = "sheet-field";
+    if(label){ const l = document.createElement("label"); l.textContent = label; field.appendChild(l); }
+    const input = document.createElement("input");
+    input.type = "text"; input.value = value; input.placeholder = placeholder;
+    field.appendChild(input);
+    sheet.appendChild(field);
+
+    const actions = document.createElement("div");
+    actions.className = "sheet-actions";
+    const cancelBtn = document.createElement("button");
+    cancelBtn.className = "secondary"; cancelBtn.textContent = "Abbrechen"; cancelBtn.type = "button";
+    const okBtn = document.createElement("button");
+    okBtn.textContent = confirmLabel; okBtn.type = "button";
+    actions.append(cancelBtn, okBtn);
+    sheet.appendChild(actions);
+
+    function finish(result){
+      overlay.classList.remove("visible");
+      document.removeEventListener("keydown", onKey);
+      setTimeout(()=> overlay.remove(), 200);
+      resolve(result);
+    }
+    function submit(){
+      const v = input.value.trim();
+      if(!v){ input.focus(); return; }
+      finish(v);
+    }
+    function onKey(e){
+      if(e.key === "Escape"){ e.preventDefault(); finish(null); }
+      if(e.key === "Enter"){ e.preventDefault(); submit(); }
+    }
+    cancelBtn.addEventListener("click", ()=> finish(null));
+    okBtn.addEventListener("click", submit);
+    overlay.addEventListener("click", e=>{ if(e.target === overlay) finish(null); });
+    document.addEventListener("keydown", onKey);
+
+    document.body.appendChild(overlay);
+    requestAnimationFrame(()=>{ overlay.classList.add("visible"); input.focus(); input.select(); });
+  });
+}
+
+function showConfirmSheet({ title, message, confirmLabel="Bestätigen", danger=false, hideCancel=false }){
+  return new Promise(resolve=>{
+    const { overlay, sheet } = buildSheetShell(title, message);
+    const actions = document.createElement("div");
+    actions.className = "sheet-actions";
+    if(!hideCancel){
+      const cancelBtn = document.createElement("button");
+      cancelBtn.className = "secondary"; cancelBtn.textContent = "Abbrechen"; cancelBtn.type = "button";
+      cancelBtn.addEventListener("click", ()=> finish(false));
+      actions.appendChild(cancelBtn);
+    }
+    const okBtn = document.createElement("button");
+    if(danger) okBtn.className = "danger";
+    okBtn.textContent = confirmLabel; okBtn.type = "button";
+    okBtn.addEventListener("click", ()=> finish(true));
+    actions.appendChild(okBtn);
+    sheet.appendChild(actions);
+
+    function finish(result){
+      overlay.classList.remove("visible");
+      document.removeEventListener("keydown", onKey);
+      setTimeout(()=> overlay.remove(), 200);
+      resolve(result);
+    }
+    function onKey(e){
+      if(e.key === "Escape") finish(false);
+      if(e.key === "Enter") finish(true);
+    }
+    overlay.addEventListener("click", e=>{ if(e.target === overlay) finish(false); });
+    document.addEventListener("keydown", onKey);
+    document.body.appendChild(overlay);
+    requestAnimationFrame(()=> overlay.classList.add("visible"));
+  });
+}
+
+function showPickerSheet({ title, options }){
+  return new Promise(resolve=>{
+    const { overlay, sheet } = buildSheetShell(title);
+    const list = document.createElement("div");
+    list.className = "sheet-picker-list";
+    options.forEach(opt=>{
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "sheet-picker-item";
+      btn.textContent = opt.label;
+      btn.addEventListener("click", ()=> finish(opt.id));
+      list.appendChild(btn);
+    });
+    sheet.appendChild(list);
+
+    const actions = document.createElement("div");
+    actions.className = "sheet-actions";
+    const cancelBtn = document.createElement("button");
+    cancelBtn.className = "secondary"; cancelBtn.textContent = "Abbrechen"; cancelBtn.type = "button";
+    cancelBtn.addEventListener("click", ()=> finish(null));
+    actions.appendChild(cancelBtn);
+    sheet.appendChild(actions);
+
+    function finish(result){
+      overlay.classList.remove("visible");
+      document.removeEventListener("keydown", onKey);
+      setTimeout(()=> overlay.remove(), 200);
+      resolve(result);
+    }
+    function onKey(e){ if(e.key === "Escape") finish(null); }
+    overlay.addEventListener("click", e=>{ if(e.target === overlay) finish(null); });
+    document.addEventListener("keydown", onKey);
+    document.body.appendChild(overlay);
+    requestAnimationFrame(()=> overlay.classList.add("visible"));
+  });
+}
+
+function showNewListSheet(){
+  return new Promise(resolve=>{
+    const { overlay, sheet } = buildSheetShell("Neue Liste");
+
+    const field = document.createElement("div");
+    field.className = "sheet-field";
+    const l = document.createElement("label"); l.textContent = "Name";
+    const input = document.createElement("input");
+    input.type = "text"; input.placeholder = "z. B. Umzug Wohnung";
+    field.append(l, input);
+    sheet.appendChild(field);
+
+    const tplField = document.createElement("div");
+    tplField.className = "sheet-field";
+    const tl = document.createElement("label"); tl.textContent = "Vorlage";
+    tplField.appendChild(tl);
+    const radios = document.createElement("div");
+    radios.className = "sheet-radio-group";
+    let template = "blank";
+    [["blank","Leere Liste"], ["travel","🧳 Reise-Packliste-Vorlage"]].forEach(([val,label], i)=>{
+      const opt = document.createElement("button");
+      opt.type = "button";
+      opt.className = "sheet-radio" + (i===0 ? " selected" : "");
+      opt.textContent = label;
+      opt.addEventListener("click", ()=>{
+        template = val;
+        radios.querySelectorAll(".sheet-radio").forEach(b=> b.classList.remove("selected"));
+        opt.classList.add("selected");
+      });
+      radios.appendChild(opt);
+    });
+    tplField.appendChild(radios);
+    sheet.appendChild(tplField);
+
+    const actions = document.createElement("div");
+    actions.className = "sheet-actions";
+    const cancelBtn = document.createElement("button");
+    cancelBtn.className = "secondary"; cancelBtn.textContent = "Abbrechen"; cancelBtn.type = "button";
+    const okBtn = document.createElement("button");
+    okBtn.textContent = "Erstellen"; okBtn.type = "button";
+    actions.append(cancelBtn, okBtn);
+    sheet.appendChild(actions);
+
+    function finish(result){
+      overlay.classList.remove("visible");
+      document.removeEventListener("keydown", onKey);
+      setTimeout(()=> overlay.remove(), 200);
+      resolve(result);
+    }
+    function submit(){
+      const name = input.value.trim();
+      if(!name){ input.focus(); return; }
+      finish({ name, template });
+    }
+    function onKey(e){
+      if(e.key === "Escape") finish(null);
+      if(e.key === "Enter"){ e.preventDefault(); submit(); }
+    }
+    cancelBtn.addEventListener("click", ()=> finish(null));
+    okBtn.addEventListener("click", submit);
+    overlay.addEventListener("click", e=>{ if(e.target === overlay) finish(null); });
+    document.addEventListener("keydown", onKey);
+    document.body.appendChild(overlay);
+    requestAnimationFrame(()=>{ overlay.classList.add("visible"); input.focus(); });
+  });
+}
+
+// ---------- Kebab context menu ----------
+function closeAnyMenu(){
+  const existing = document.querySelector(".kebab-menu");
+  if(existing) existing.remove();
+  document.removeEventListener("click", closeAnyMenu, true);
+}
+function showMenu(anchor, items){
+  closeAnyMenu();
+  const menu = document.createElement("div");
+  menu.className = "kebab-menu";
+  items.forEach(it=>{
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "kebab-menu-item" + (it.danger ? " danger" : "");
+    const iconSpan = document.createElement("span");
+    iconSpan.className = "kmi-icon"; iconSpan.textContent = it.icon || "";
+    const labelSpan = document.createElement("span");
+    labelSpan.textContent = it.label;
+    btn.append(iconSpan, labelSpan);
+    btn.addEventListener("click", ()=>{ closeAnyMenu(); it.action(); });
+    menu.appendChild(btn);
+  });
+  document.body.appendChild(menu);
+  const r = anchor.getBoundingClientRect();
+  const menuRect = menu.getBoundingClientRect();
+  let top = r.bottom + 6;
+  let left = r.right - menuRect.width;
+  if(left < 8) left = 8;
+  if(top + menuRect.height > window.innerHeight - 8) top = r.top - menuRect.height - 6;
+  menu.style.top = top + "px";
+  menu.style.left = left + "px";
+  requestAnimationFrame(()=> menu.classList.add("visible"));
+  setTimeout(()=> document.addEventListener("click", closeAnyMenu, true), 0);
+}
+
+// ---------- Confetti ----------
+function burstConfetti(x, y){
+  for(let i=0;i<16;i++){
+    const el = document.createElement("div");
+    el.className = "confetti-piece";
+    el.style.left = x + "px"; el.style.top = y + "px";
+    el.style.background = PALETTE[i % PALETTE.length];
+    const angle = Math.random() * Math.PI * 2;
+    const dist = 55 + Math.random() * 85;
+    el.style.setProperty("--dx", Math.cos(angle) * dist + "px");
+    el.style.setProperty("--dy", (Math.sin(angle) * dist - 35) + "px");
+    el.style.setProperty("--rot", (Math.random() * 720 - 360) + "deg");
+    document.body.appendChild(el);
+    el.addEventListener("animationend", ()=> el.remove());
+  }
+}
+
+// ---------- Flows ----------
+async function addCategoryFlow(parentId){
+  const name = await showTextSheet({
+    title: parentId === "root" ? "Neue Kategorie" : "Neue Unterkategorie",
+    label: "Name", placeholder: "z. B. 🎒 Sonstiges", confirmLabel: "Erstellen"
+  });
+  if(!name) return;
+  await addCategory(parentId, name);
+}
+async function renameNodeFlow(id, currentValue, isCategory){
+  const result = await showTextSheet({
+    title: isCategory ? "Kategorie umbenennen" : "Eintrag umbenennen",
+    label: "Name", value: currentValue, confirmLabel: "Speichern"
+  });
+  if(!result || result === currentValue) return;
+  await renameNode(id, result, isCategory);
+}
+async function deleteNodeFlow(id, isCategory, name){
+  const kidsCount = isCategory ? collectSubtree(id).length - 1 : 0;
+  const msg = isCategory && kidsCount > 0
+    ? `„${name}" inkl. ${kidsCount} Eintrag/Einträge löschen?`
+    : `„${name}" löschen?`;
+  const ok = await showConfirmSheet({
+    title: isCategory ? "Kategorie löschen" : "Eintrag löschen",
+    message: msg, confirmLabel: "Löschen", danger: true
+  });
+  if(!ok) return;
+  await deleteNode(id);
+  celebrated.delete(id);
+}
+function collectCategoryOptions(excludeIds){
+  const nodes = getNodes();
+  const options = [];
+  function walk(parentId, depth){
+    childrenOf(parentId).forEach(id=>{
+      const n = nodes[id];
+      if(!n || n.type !== "category") return;
+      if(!excludeIds.has(id)){
+        options.push({ id, label: "　".repeat(depth) + n.name, depth });
+      }
+      walk(id, depth+1);
+    });
+  }
+  walk("root", 0);
+  return options;
+}
+async function moveNodeFlow(id, isCategory){
+  const nodes = getNodes();
+  const n = nodes[id];
+  if(!n) return;
+  const exclude = new Set(isCategory ? collectSubtree(id) : []);
+  const catOptions = collectCategoryOptions(exclude);
+  const choices = isCategory ? [{ id:"root", label:"📥 Oberste Ebene" }, ...catOptions] : catOptions;
+  if(choices.length === 0){
+    await showConfirmSheet({ title:"Keine Ziele verfügbar", message:"Es gibt keine passende Kategorie zum Verschieben.", confirmLabel:"OK", hideCancel:true });
+    return;
+  }
+  const targetId = await showPickerSheet({ title:"Verschieben nach…", options: choices });
+  if(!targetId || targetId === n.parentId) return;
+  const toOrder = childrenOf(targetId);
+  await moveNode(id, n.parentId, targetId, toOrder.length);
+}
+function openCategoryMenu(id, n, anchor){
+  showMenu(anchor, [
+    { label:"Umbenennen", icon:"✎", action: ()=> renameNodeFlow(id, n.name, true) },
+    { label:"Unterkategorie hinzufügen", icon:"➕", action: ()=> addCategoryFlow(id) },
+    { label:"Verschieben nach…", icon:"↪", action: ()=> moveNodeFlow(id, true) },
+    { label:"Duplizieren", icon:"⧉", action: ()=> duplicateNode(id) },
+    { label:"Löschen", icon:"🗑", danger:true, action: ()=> deleteNodeFlow(id, true, n.name) }
+  ]);
+}
+function openItemMenu(id, n, anchor){
+  showMenu(anchor, [
+    { label:"Umbenennen", icon:"✎", action: ()=> renameNodeFlow(id, n.text, false) },
+    { label:"Verschieben nach…", icon:"↪", action: ()=> moveNodeFlow(id, false) },
+    { label:"Duplizieren", icon:"⧉", action: ()=> duplicateNode(id) },
+    { label:"Löschen", icon:"🗑", danger:true, action: ()=> deleteNodeFlow(id, false, n.text) }
+  ]);
+}
+
+// ---------- Rendering ----------
+function destroySortables(){
+  sortables.forEach(s=>{ try{ s.destroy(); }catch(e){} });
+  sortables = [];
+}
+function sortableOptions(){
+  return {
+    group: "tree",
+    handle: ".drag-handle",
+    animation: 180,
+    ghostClass: "sortable-ghost",
+    dragClass: "sortable-drag",
+    onMove: function(evt){
+      const draggedId = evt.dragged.dataset.nodeId;
+      const draggedNode = getNodes()[draggedId];
+      const draggedType = draggedNode && draggedNode.type;
+      const targetParentId = evt.to.dataset.parentId;
+      if(targetParentId === "root" && draggedType === "item") return false;
+      if(draggedType === "category" && wouldCreateCycle(draggedId, targetParentId)) return false;
+      return true;
+    },
+    onEnd: function(evt){
+      const nodeId = evt.item.dataset.nodeId;
+      const fromParentId = evt.from.dataset.parentId;
+      const toParentId = evt.to.dataset.parentId;
+      if(!nodeId || fromParentId == null || toParentId == null) return;
+      moveNode(nodeId, fromParentId, toParentId, evt.newIndex).catch(err=> console.error(err));
+    }
+  };
+}
+
+function buildItemRow(id, n){
+  const row = document.createElement("div");
+  row.className = "item-row" + (n.checked ? " checked" : "");
+  row.dataset.nodeId = id;
+
+  const handle = document.createElement("span");
+  handle.className = "drag-handle"; handle.textContent = "⠿"; handle.setAttribute("aria-hidden","true");
+
+  const cb = document.createElement("input");
+  cb.type = "checkbox"; cb.checked = !!n.checked;
+  cb.addEventListener("change", ()=> setChecked(id, cb.checked));
+
+  const span = document.createElement("span");
+  span.className = "item-text";
+  span.textContent = n.text;
+  span.title = "Doppelklick zum Umbenennen";
+  span.addEventListener("dblclick", ()=> renameNodeFlow(id, n.text, false));
+
+  const kebab = document.createElement("button");
+  kebab.className = "kebab-btn"; kebab.type = "button"; kebab.textContent = "⋯";
+  kebab.setAttribute("aria-label", "Mehr Optionen");
+  kebab.addEventListener("click", (e)=>{ e.stopPropagation(); openItemMenu(id, n, kebab); });
+
+  row.append(handle, cb, span, kebab);
+  return row;
+}
+
+function buildAddItemRow(parentId){
+  const addRow = document.createElement("div");
+  addRow.className = "add-row";
+  const input = document.createElement("input");
+  input.type = "text";
+  input.placeholder = "Eintrag hinzufügen…";
+  input.dataset.addInputFor = parentId;
+  input.value = draftInputs[parentId] || "";
+  input.addEventListener("input", ()=> { draftInputs[parentId] = input.value; });
+  const btn = document.createElement("button");
+  btn.className = "add-btn"; btn.type = "button"; btn.textContent = "+"; btn.title = "Hinzufügen";
+  function submit(){
+    const text = input.value.trim();
+    if(!text) return;
+    draftInputs[parentId] = "";
+    input.value = "";
+    addItem(parentId, text).then(()=> input.focus());
+  }
+  input.addEventListener("keydown", e=>{ if(e.key === "Enter") submit(); });
+  btn.addEventListener("click", submit);
+  addRow.append(input, btn);
+  return addRow;
+}
+
+function buildAddSubcatGhost(parentId){
+  const btn = document.createElement("button");
+  btn.className = "add-subcat-ghost"; btn.type = "button";
+  btn.textContent = "+ Unterkategorie";
+  btn.addEventListener("click", ()=> addCategoryFlow(parentId));
+  return btn;
+}
+
+function fillChildrenContainer(container, parentId, depth){
+  const nodes = getNodes();
+  childrenOf(parentId).forEach(id=>{
+    const n = nodes[id];
+    if(!n) return;
+    if(n.type === "item"){
+      container.appendChild(buildItemRow(id, n));
+    } else {
+      container.appendChild(buildCategoryNode(id, n, depth));
+    }
+  });
+  if(depth > 0){
+    container.appendChild(buildAddItemRow(parentId));
+    container.appendChild(buildAddSubcatGhost(parentId));
+  }
+  const sortable = new Sortable(container, sortableOptions());
+  sortables.push(sortable);
+}
+
+function buildChildrenContainer(parentId, depth){
+  const container = document.createElement("div");
+  container.className = "children-list";
+  container.dataset.parentId = parentId;
+  fillChildrenContainer(container, parentId, depth);
+  return container;
+}
+
+function buildCategoryNode(id, n, depth){
+  const progress = computeProgress(id);
+  const isCollapsed = collapsedSet.has(id);
+
+  const wrap = document.createElement("div");
+  wrap.className = "cat-node " + (depth === 0 ? "cat-top glass" : "cat-sub");
+  wrap.dataset.nodeId = id;
+  wrap.style.setProperty("--cat-color", colorForId(id));
+
+  const header = document.createElement("div");
+  header.className = "cat-header";
+
+  const handle = document.createElement("span");
+  handle.className = "drag-handle"; handle.textContent = "⠿"; handle.setAttribute("aria-hidden","true");
+
+  const chevron = document.createElement("button");
+  chevron.type = "button";
+  chevron.className = "chevron-btn" + (isCollapsed ? " collapsed" : "");
+  chevron.textContent = "▾";
+  chevron.setAttribute("aria-label", "Ein-/ausklappen");
+  chevron.addEventListener("click", ()=> toggleCollapsed(id));
+
+  const nameBtn = document.createElement("button");
+  nameBtn.type = "button";
+  nameBtn.className = "cat-name";
+  nameBtn.textContent = n.name;
+  nameBtn.title = "Umbenennen";
+  nameBtn.addEventListener("click", ()=> renameNodeFlow(id, n.name, true));
+
+  const count = document.createElement("span");
+  count.className = "count-badge";
+  count.textContent = `${progress.done}/${progress.total}`;
+
+  const kebab = document.createElement("button");
+  kebab.type = "button";
+  kebab.className = "kebab-btn"; kebab.textContent = "⋯";
+  kebab.setAttribute("aria-label", "Mehr Optionen");
+  kebab.addEventListener("click", (e)=>{ e.stopPropagation(); openCategoryMenu(id, n, kebab); });
+
+  header.append(handle, chevron, nameBtn, count, kebab);
+  wrap.appendChild(header);
+
+  const miniBar = document.createElement("div");
+  miniBar.className = "mini-progress";
+  const miniFill = document.createElement("div");
+  miniFill.className = "mini-progress-fill";
+  miniFill.style.width = progress.total ? (progress.done/progress.total*100)+"%" : "0%";
+  miniBar.appendChild(miniFill);
+  wrap.appendChild(miniBar);
+
+  const childrenWrap = document.createElement("div");
+  childrenWrap.className = "children-wrap" + (isCollapsed ? " collapsed" : "");
+  childrenWrap.appendChild(buildChildrenContainer(id, depth + 1));
+  wrap.appendChild(childrenWrap);
+
+  if(progress.total > 0 && progress.done === progress.total){
+    pendingCelebrations.push(id);
+  } else {
+    celebrated.delete(id);
+  }
+
+  return wrap;
+}
+
+function renderTree(){
+  let focusedParent = null, focusedSelStart = null;
   const active = document.activeElement;
   if(active && active.dataset && active.dataset.addInputFor){
-    focusedCat = active.dataset.addInputFor;
+    focusedParent = active.dataset.addInputFor;
     focusedSelStart = active.selectionStart;
   }
 
+  destroySortables();
   categoriesEl.innerHTML = "";
+
   if(!activeListData){ setProgress(0, 0); return; }
+  if(!activeListData.nodes) activeListData.nodes = {};
+  if(!activeListData.childOrder) activeListData.childOrder = {};
+  if(!activeListData.childOrder.root) activeListData.childOrder.root = [];
 
-  const order = currentOrder();
-  const categories = activeListData.categories || {};
-  let total = 0, done = 0;
+  pendingCelebrations = [];
 
-  order.forEach((cat, idx)=>{
-    const itemsObj = categories[cat] || {};
-    const entries = Object.entries(itemsObj);
-    const catDone = entries.filter(([,it])=>it.checked).length;
-    total += entries.length;
-    done += catDone;
-    const isCollapsed = collapsedSet.has(cat);
+  categoriesEl.className = "children-list top-level";
+  categoriesEl.dataset.parentId = "root";
+  fillChildrenContainer(categoriesEl, "root", 0);
 
-    const catEl = document.createElement("div");
-    catEl.className = "category glass";
+  const rootProgress = computeProgress("root");
+  setProgress(rootProgress.done, rootProgress.total);
+  if(rootProgress.total > 0 && rootProgress.done === rootProgress.total){
+    pendingCelebrations.push("root");
+  } else {
+    celebrated.delete("root");
+  }
 
-    const header = document.createElement("div");
-    header.className = "category-header";
-
-    const titleRow = document.createElement("div");
-    titleRow.className = "title-row";
-    titleRow.addEventListener("click", ()=> toggleCategoryCollapsed(cat));
-    const chevron = document.createElement("span");
-    chevron.className = "chevron" + (isCollapsed ? " collapsed" : "");
-    chevron.textContent = "▾";
-    const h2 = document.createElement("h2");
-    h2.textContent = cat;
-    const count = document.createElement("span");
-    count.className = "count";
-    count.textContent = `${catDone}/${entries.length}`;
-    titleRow.appendChild(chevron);
-    titleRow.appendChild(h2);
-    titleRow.appendChild(count);
-    header.appendChild(titleRow);
-
-    const actions = document.createElement("div");
-    actions.className = "cat-actions";
-
-    const upBtn = document.createElement("button");
-    upBtn.className = "icon-btn"; upBtn.title = "Nach oben"; upBtn.textContent = "↑";
-    upBtn.disabled = idx === 0;
-    upBtn.addEventListener("click", ()=> moveCategory(cat, -1));
-
-    const downBtn = document.createElement("button");
-    downBtn.className = "icon-btn"; downBtn.title = "Nach unten"; downBtn.textContent = "↓";
-    downBtn.disabled = idx === order.length - 1;
-    downBtn.addEventListener("click", ()=> moveCategory(cat, 1));
-
-    const renameBtn = document.createElement("button");
-    renameBtn.className = "icon-btn"; renameBtn.title = "Umbenennen"; renameBtn.textContent = "✎";
-    renameBtn.addEventListener("click", ()=> renameCategory(cat));
-
-    const deleteBtn = document.createElement("button");
-    deleteBtn.className = "icon-btn"; deleteBtn.title = "Kategorie löschen"; deleteBtn.textContent = "🗑";
-    deleteBtn.addEventListener("click", ()=> deleteCategory(cat));
-
-    actions.appendChild(upBtn);
-    actions.appendChild(downBtn);
-    actions.appendChild(renameBtn);
-    actions.appendChild(deleteBtn);
-    header.appendChild(actions);
-
-    catEl.appendChild(header);
-
-    const catProgress = document.createElement("div");
-    catProgress.className = "cat-progress";
-    const catProgressFill = document.createElement("div");
-    catProgressFill.className = "cat-progress-fill";
-    catProgressFill.style.width = entries.length ? (catDone/entries.length*100)+"%" : "0%";
-    catProgress.appendChild(catProgressFill);
-    catEl.appendChild(catProgress);
-
-    const itemsEl = document.createElement("div");
-    itemsEl.className = "items" + (isCollapsed ? " collapsed" : "");
-
-    if(entries.length === 0){
-      const empty = document.createElement("div");
-      empty.className = "empty-cat";
-      empty.textContent = "Noch keine Artikel in dieser Kategorie.";
-      itemsEl.appendChild(empty);
-    }
-
-    entries.forEach(([itemId, item])=>{
-      const row = document.createElement("div");
-      row.className = "item" + (item.checked ? " checked" : "");
-
-      const cb = document.createElement("input");
-      cb.type = "checkbox";
-      cb.checked = !!item.checked;
-      cb.addEventListener("change", ()=> toggleItem(cat, itemId, cb.checked));
-
-      const span = document.createElement("span");
-      span.textContent = item.text;
-      span.title = "Doppelklick oder gedrückt halten zum Umbenennen";
-
-      span.addEventListener("dblclick", ()=> renameItem(cat, itemId, item.text));
-
-      let pressTimer = null;
-      let pressStart = null;
-      const clearPress = ()=>{
-        if(pressTimer){ clearTimeout(pressTimer); pressTimer = null; }
-        span.classList.remove("pressing");
-      };
-      span.addEventListener("pointerdown", (e)=>{
-        if(e.pointerType === "mouse" && e.button !== 0) return;
-        pressStart = { x: e.clientX, y: e.clientY };
-        span.classList.add("pressing");
-        pressTimer = setTimeout(()=>{
-          span.classList.remove("pressing");
-          pressTimer = null;
-          renameItem(cat, itemId, item.text);
-        }, 1000);
-      });
-      span.addEventListener("pointermove", (e)=>{
-        if(!pressStart) return;
-        const dx = e.clientX - pressStart.x, dy = e.clientY - pressStart.y;
-        if(Math.sqrt(dx*dx + dy*dy) > 12) clearPress();
-      });
-      ["pointerup","pointerleave","pointercancel"].forEach(evt=>
-        span.addEventListener(evt, clearPress)
-      );
-
-      const del = document.createElement("button");
-      del.className = "del";
-      del.textContent = "✕";
-      del.title = "Entfernen";
-      del.addEventListener("click", ()=> deleteItem(cat, itemId));
-
-      row.appendChild(cb);
-      row.appendChild(span);
-      row.appendChild(del);
-      itemsEl.appendChild(row);
-    });
-
-    // Inline "add item" row, scoped to this category
-    const addRow = document.createElement("div");
-    addRow.className = "add-in-cat";
-    const addInput = document.createElement("input");
-    addInput.type = "text";
-    addInput.placeholder = "Artikel hinzufügen…";
-    addInput.dataset.addInputFor = cat;
-    addInput.value = draftInputs[cat] || "";
-    addInput.addEventListener("input", ()=> { draftInputs[cat] = addInput.value; });
-    const addBtn = document.createElement("button");
-    addBtn.textContent = "+";
-    addBtn.title = "Hinzufügen";
-    function submit(){ addItemToCategory(cat, addInput); }
-    addInput.addEventListener("keydown", (e)=>{ if(e.key === "Enter") submit(); });
-    addBtn.addEventListener("click", submit);
-    addRow.appendChild(addInput);
-    addRow.appendChild(addBtn);
-    itemsEl.appendChild(addRow);
-
-    catEl.appendChild(itemsEl);
-    categoriesEl.appendChild(catEl);
-  });
-
-  if(focusedCat){
-    const el = categoriesEl.querySelector(`[data-add-input-for="${CSS.escape(focusedCat)}"]`);
+  if(focusedParent){
+    const el = categoriesEl.querySelector(`[data-add-input-for="${CSS.escape(focusedParent)}"]`);
     if(el){
       el.focus();
       if(focusedSelStart != null){
@@ -858,98 +1460,38 @@ function renderCategories(){
     }
   }
 
-  setProgress(done, total);
+  requestAnimationFrame(()=>{
+    pendingCelebrations.forEach(id=>{
+      if(celebrated.has(id)) return;
+      celebrated.add(id);
+      const el = id === "root"
+        ? document.querySelector(".progress-card .progress-bar")
+        : categoriesEl.querySelector(`[data-node-id="${CSS.escape(id)}"] > .mini-progress`);
+      if(el){
+        const r = el.getBoundingClientRect();
+        burstConfetti(r.left + r.width/2, r.top + r.height/2);
+      }
+    });
+  });
 }
 
-async function toggleItem(cat, itemId, checked){
-  const ref = doc(db, "lists", activeListId);
-  await updateDoc(ref, { [`categories.${cat}.${itemId}.checked`]: checked });
-}
-
-async function deleteItem(cat, itemId){
-  const ref = doc(db, "lists", activeListId);
-  await updateDoc(ref, { [`categories.${cat}.${itemId}`]: deleteField() });
-}
-
-async function renameItem(cat, itemId, oldText){
-  const newText = prompt("Artikel umbenennen:", oldText);
-  if(!newText || !newText.trim() || newText.trim() === oldText) return;
-  const ref = doc(db, "lists", activeListId);
-  await updateDoc(ref, { [`categories.${cat}.${itemId}.text`]: newText.trim() });
-}
-
-async function addItemToCategory(cat, inputEl){
-  const text = inputEl.value.trim();
-  if(!text || !activeListId) return;
-  const ref = doc(db, "lists", activeListId);
-  const id = uid();
-  draftInputs[cat] = "";
-  inputEl.value = "";
-  await updateDoc(ref, { [`categories.${cat}.${id}`]: { text, checked: false } });
-  inputEl.focus();
-}
-
-async function renameCategory(oldName){
-  if(!activeListData) return;
-  const newName = prompt("Neuer Name für die Kategorie:", oldName);
-  if(!newName || !newName.trim() || newName.trim() === oldName) return;
-  const trimmed = newName.trim();
-  if(activeListData.categories[trimmed]){ alert("Eine Kategorie mit diesem Namen gibt es schon."); return; }
-  const ref = doc(db, "lists", activeListId);
-  const updates = {};
-  updates[`categories.${trimmed}`] = activeListData.categories[oldName] || {};
-  updates[`categories.${oldName}`] = deleteField();
-  updates.categoryOrder = currentOrder().map(c => c === oldName ? trimmed : c);
-  await updateDoc(ref, updates);
-}
-
-async function deleteCategory(name){
-  if(!activeListData) return;
-  const count = Object.keys(activeListData.categories[name] || {}).length;
-  const msg = count > 0
-    ? `Kategorie "${name}" inkl. ${count} Artikel löschen?`
-    : `Kategorie "${name}" löschen?`;
-  if(!confirm(msg)) return;
-  const ref = doc(db, "lists", activeListId);
-  const updates = {};
-  updates[`categories.${name}`] = deleteField();
-  updates.categoryOrder = currentOrder().filter(c => c !== name);
-  await updateDoc(ref, updates);
-}
-
-async function addCategory(){
-  if(!activeListData) return;
-  const name = prompt("Name der neuen Kategorie (z.B. „🎒 Sonstiges“):");
-  if(!name || !name.trim()) return;
-  const trimmed = name.trim();
-  if(activeListData.categories[trimmed]){ alert("Eine Kategorie mit diesem Namen gibt es schon."); return; }
-  const ref = doc(db, "lists", activeListId);
-  const updates = {};
-  updates[`categories.${trimmed}`] = {};
-  updates.categoryOrder = [...currentOrder(), trimmed];
-  await updateDoc(ref, updates);
-}
-
-async function moveCategory(name, direction){
-  if(!activeListData) return;
-  const order = [...currentOrder()];
-  const idx = order.indexOf(name);
-  const newIdx = idx + direction;
-  if(idx === -1 || newIdx < 0 || newIdx >= order.length) return;
-  [order[idx], order[newIdx]] = [order[newIdx], order[idx]];
-  const ref = doc(db, "lists", activeListId);
-  await updateDoc(ref, { categoryOrder: order });
-}
-
+// ---------- List lifecycle ----------
 function watchActiveList(id){
   if(unsubActiveList) unsubActiveList();
   activeListId = id;
+  celebrated = new Set();
   loadCollapsed(id);
   setListIdInUrl(id);
-  unsubActiveList = onSnapshot(doc(db, "lists", id), (snap)=>{
-    if(!snap.exists()){ activeListData = null; renderCategories(); return; }
-    activeListData = snap.data();
-    renderCategories();
+  unsubActiveList = onSnapshot(doc(db, "lists", id), async (snap)=>{
+    if(!snap.exists()){ activeListData = null; renderTree(); return; }
+    const data = snap.data();
+    if(isOldFormat(data)){
+      const migrated = migrateListData(data);
+      await setDoc(doc(db, "lists", id), migrated);
+      return;
+    }
+    activeListData = data;
+    renderTree();
     setStatus("Live verbunden – Änderungen werden sofort geteilt", true);
   }, (err)=>{
     console.error(err);
@@ -964,7 +1506,7 @@ async function switchList(id){
 
 listSelect.addEventListener("change", ()=> switchList(listSelect.value));
 
-document.getElementById("newCategoryBtn").addEventListener("click", addCategory);
+document.getElementById("newCategoryBtn").addEventListener("click", ()=> addCategoryFlow("root"));
 
 document.getElementById("copyLinkBtn").addEventListener("click", ()=>{
   shareLink.select();
@@ -977,20 +1519,20 @@ document.getElementById("copyLinkBtn").addEventListener("click", ()=>{
 });
 
 document.getElementById("newListBtn").addEventListener("click", async ()=>{
-  const name = prompt("Name der neuen Liste (z.B. „Skiurlaub 2027“):");
-  if(!name || !name.trim()) return;
-  const cats = {};
-  defaultCategoryOrder.forEach(c=> cats[c] = {});
+  const result = await showNewListSheet();
+  if(!result) return;
+  const data = result.template === "travel" ? defaultSommerurlaub() : blankList(result.name);
+  data.name = result.name;
   const ref = doc(listsCol);
-  await setDoc(ref, { name: name.trim(), categoryOrder: defaultCategoryOrder, categories: cats, createdAt: serverTimestamp() });
+  await setDoc(ref, data);
   switchList(ref.id);
 });
 
 document.getElementById("renameListBtn").addEventListener("click", async ()=>{
   if(!activeListData) return;
-  const name = prompt("Neuer Name für diese Liste:", activeListData.name);
-  if(!name || !name.trim()) return;
-  await updateDoc(doc(db, "lists", activeListId), { name: name.trim() });
+  const name = await showTextSheet({ title:"Liste umbenennen", label:"Name", value: activeListData.name, confirmLabel:"Speichern" });
+  if(!name || name === activeListData.name) return;
+  await updateDoc(doc(db, "lists", activeListId), { name });
 });
 
 document.getElementById("duplicateListBtn").addEventListener("click", async ()=>{
@@ -998,8 +1540,8 @@ document.getElementById("duplicateListBtn").addEventListener("click", async ()=>
   const ref = doc(listsCol);
   await setDoc(ref, {
     name: activeListData.name + " (Kopie)",
-    categoryOrder: activeListData.categoryOrder,
-    categories: JSON.parse(JSON.stringify(activeListData.categories)),
+    nodes: JSON.parse(JSON.stringify(activeListData.nodes || {})),
+    childOrder: JSON.parse(JSON.stringify(activeListData.childOrder || { root: [] })),
     createdAt: serverTimestamp()
   });
   switchList(ref.id);
@@ -1007,9 +1549,13 @@ document.getElementById("duplicateListBtn").addEventListener("click", async ()=>
 
 document.getElementById("deleteListBtn").addEventListener("click", async ()=>{
   const ids = Object.keys(allLists);
-  if(ids.length <= 1){ alert("Das ist die einzige Liste — sie kann nicht gelöscht werden."); return; }
+  if(ids.length <= 1){
+    await showConfirmSheet({ title:"Nicht möglich", message:"Das ist die einzige Liste — sie kann nicht gelöscht werden.", confirmLabel:"OK", hideCancel:true });
+    return;
+  }
   if(!activeListData) return;
-  if(!confirm(`Liste „${activeListData.name}“ wirklich für alle löschen?`)) return;
+  const ok = await showConfirmSheet({ title:"Liste löschen", message:`Liste „${activeListData.name}" wirklich für alle löschen?`, confirmLabel:"Löschen", danger:true });
+  if(!ok) return;
   const idToDelete = activeListId;
   const fallback = ids.find(i => i !== idToDelete);
   await switchList(fallback);
@@ -1018,16 +1564,16 @@ document.getElementById("deleteListBtn").addEventListener("click", async ()=>{
 
 document.getElementById("resetChecksBtn").addEventListener("click", async ()=>{
   if(!activeListData) return;
-  if(!confirm("Alle Häkchen in dieser Liste für alle zurücksetzen?")) return;
+  const ok = await showConfirmSheet({ title:"Zurücksetzen", message:"Alle Häkchen in dieser Liste für alle zurücksetzen?", confirmLabel:"Zurücksetzen", danger:true });
+  if(!ok) return;
   const updates = {};
-  Object.entries(activeListData.categories || {}).forEach(([cat, items])=>{
-    Object.keys(items).forEach(id=>{
-      updates[`categories.${cat}.${id}.checked`] = false;
-    });
+  Object.entries(activeListData.nodes || {}).forEach(([id, n])=>{
+    if(n.type === "item" && n.checked) updates[`nodes.${id}.checked`] = false;
   });
   if(Object.keys(updates).length){
     await updateDoc(doc(db, "lists", activeListId), updates);
   }
+  celebrated.clear();
 });
 
 document.getElementById("printBtn").addEventListener("click", ()=> window.print());
@@ -1039,10 +1585,9 @@ async function init(){
     snap.forEach(d=> allLists[d.id] = d.data());
 
     if(Object.keys(allLists).length === 0){
-      // First ever visitor: seed the default list
       const ref = doc(listsCol);
       await setDoc(ref, defaultSommerurlaub());
-      return; // onSnapshot will fire again with the new list
+      return;
     }
 
     renderListSelect();
@@ -1052,7 +1597,6 @@ async function init(){
       const startId = (urlId && allLists[urlId]) ? urlId : Object.keys(allLists)[0];
       watchActiveList(startId);
     } else if(!allLists[activeListId]){
-      // active list was deleted remotely
       watchActiveList(Object.keys(allLists)[0]);
     } else {
       renderListSelect();
