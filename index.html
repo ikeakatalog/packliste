@@ -2,116 +2,278 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Packliste</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#f5f3ee;
-    --card:#ffffff;
-    --ink:#2b2a28;
-    --muted:#8a8578;
-    --accent:#c96a3c;
-    --accent-dark:#a5522c;
-    --border:#e5e0d5;
-    --done:#7a9b6e;
+    --scale: 1;
+    --ink:#241f2e;
+    --muted:#8b8496;
+    --muted-light:#a9a3b5;
+    --accent1:#7b6cf0;
+    --accent2:#ef7ba0;
+    --accent3:#5ad1c8;
+    --done:#3ecf8e;
+    --danger:#f0577b;
+    --glass-bg: rgba(255,255,255,0.55);
+    --glass-bg-strong: rgba(255,255,255,0.72);
+    --glass-border: rgba(255,255,255,0.6);
+    --glass-shadow: 0 8px 32px rgba(90,60,150,0.14);
   }
   *{box-sizing:border-box;}
+  html{font-size:calc(16px * var(--scale)); scroll-behavior:smooth;}
   body{
     margin:0;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
-    background:var(--bg);
+    min-height:100vh;
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
     color:var(--ink);
-    padding:24px 16px 60px;
+    padding:1.25rem 1rem 5rem;
+    background:
+      radial-gradient(circle at 12% 8%, rgba(123,108,240,0.35), transparent 45%),
+      radial-gradient(circle at 88% 15%, rgba(239,123,160,0.32), transparent 42%),
+      radial-gradient(circle at 20% 90%, rgba(90,209,200,0.30), transparent 45%),
+      radial-gradient(circle at 90% 85%, rgba(255,205,120,0.28), transparent 40%),
+      linear-gradient(160deg, #f4f1fb 0%, #f7f0f5 45%, #eef8f6 100%);
+    background-attachment: fixed;
+    position:relative;
   }
-  .wrap{max-width:760px;margin:0 auto;}
-  header{margin-bottom:20px;}
-  h1{font-size:1.6rem;margin:0 0 4px;}
-  .sub{color:var(--muted);font-size:0.9rem;}
-  .status{font-size:0.8rem;color:var(--muted);margin-top:6px;}
-  .status.live::before{content:"● ";color:var(--done);}
-  .status.offline::before{content:"● ";color:#c94c4c;}
+  .wrap{max-width:44rem;margin:0 auto;position:relative;z-index:1;}
+
+  .glass{
+    background:var(--glass-bg);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    border:1px solid var(--glass-border);
+    border-radius:1.4rem;
+    box-shadow:var(--glass-shadow);
+  }
+
+  header.glass{
+    padding:1.3rem 1.4rem;
+    margin-bottom:1rem;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:0.75rem;
+  }
+  .title-block h1{
+    font-family:'Outfit',sans-serif;
+    font-size:1.7rem;
+    font-weight:700;
+    margin:0 0 0.2rem;
+    background:linear-gradient(100deg, var(--accent1), var(--accent2) 60%, var(--accent3));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    letter-spacing:-0.01em;
+  }
+  .sub{color:var(--muted);font-size:0.9rem;margin:0;}
+  .status{font-size:0.78rem;color:var(--muted);margin-top:0.5rem;display:flex;align-items:center;gap:0.4rem;}
+  .status .dot{width:0.5rem;height:0.5rem;border-radius:50%;background:var(--danger);flex-shrink:0;}
+  .status.live .dot{background:var(--done);box-shadow:0 0 0 0 rgba(62,207,142,0.6);animation:pulse 2s infinite;}
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(62,207,142,0.55);}
+    70%{box-shadow:0 0 0 7px rgba(62,207,142,0);}
+    100%{box-shadow:0 0 0 0 rgba(62,207,142,0);}
+  }
+
+  .fontctl{
+    display:flex;align-items:center;gap:0.15rem;
+    background:rgba(255,255,255,0.6);
+    border:1px solid var(--glass-border);
+    border-radius:999px;
+    padding:0.2rem;
+    flex-shrink:0;
+  }
+  .fontctl button{
+    all:unset;
+    width:2rem;height:2rem;
+    display:flex;align-items:center;justify-content:center;
+    border-radius:999px;
+    font-family:'Outfit',sans-serif;
+    font-weight:700;
+    color:var(--ink);
+    cursor:pointer;
+    font-size:0.85rem;
+    line-height:1;
+  }
+  .fontctl button:active{background:rgba(123,108,240,0.25);}
+  .fontctl button:nth-child(1){font-size:0.72rem;}
+  .fontctl button:nth-child(3){font-size:1.05rem;}
+  .fontctl .divider{width:1px;height:1.1rem;background:var(--glass-border);}
 
   .toolbar{
-    display:flex;flex-wrap:wrap;gap:8px;align-items:center;
-    background:var(--card);border:1px solid var(--border);border-radius:12px;
-    padding:12px;margin:18px 0;
+    display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;
+    padding:0.9rem;margin:0.9rem 0;
   }
-  .toolbar label{font-size:0.85rem;color:var(--muted);margin-right:4px;}
+  .toolbar label{font-size:0.8rem;color:var(--muted);margin-right:0.1rem;white-space:nowrap;}
   select, input[type=text]{
-    font-size:0.95rem;padding:8px 10px;border:1px solid var(--border);
-    border-radius:8px;background:#fff;color:var(--ink);
+    font-family:'Inter',sans-serif;
+    font-size:0.95rem;padding:0.6rem 0.7rem;
+    border:1px solid var(--glass-border);
+    border-radius:0.8rem;
+    background:rgba(255,255,255,0.75);
+    color:var(--ink);
+    min-height:2.6rem;
   }
-  select#listSelect{flex:1;min-width:140px;}
+  select:focus, input[type=text]:focus{ outline:2px solid var(--accent1); outline-offset:1px;}
+  select#listSelect{flex:1;min-width:9rem;}
+
   button{
-    font-size:0.9rem;padding:8px 14px;border:none;border-radius:8px;
-    background:var(--accent);color:#fff;cursor:pointer;
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:0.86rem;padding:0.6rem 0.95rem;border:none;border-radius:0.8rem;
+    background:linear-gradient(120deg, var(--accent1), var(--accent2));
+    color:#fff;cursor:pointer;
+    min-height:2.6rem;
+    box-shadow:0 4px 14px rgba(123,108,240,0.28);
+    transition:transform .12s ease, box-shadow .12s ease;
   }
-  button:hover{background:var(--accent-dark);}
-  button.secondary{background:#efe9dd;color:var(--ink);}
-  button.secondary:hover{background:#e2dbc9;}
-  button.danger{background:#c94c4c;}
-  button.danger:hover{background:#a83c3c;}
-  button:disabled{opacity:0.5;cursor:default;}
+  button:hover{transform:translateY(-1px); box-shadow:0 6px 18px rgba(123,108,240,0.36);}
+  button:active{transform:translateY(0);}
+  button.secondary{background:rgba(255,255,255,0.7);color:var(--ink);box-shadow:none;border:1px solid var(--glass-border);}
+  button.secondary:hover{background:rgba(255,255,255,0.9); box-shadow:0 4px 12px rgba(90,60,150,0.12);}
+  button.danger{background:linear-gradient(120deg, var(--danger), #e5486e); box-shadow:0 4px 14px rgba(240,87,123,0.3);}
+  button:disabled{opacity:0.5;cursor:default;transform:none;}
 
   .share-row{
-    display:flex;gap:8px;align-items:center;margin:10px 0;flex-wrap:wrap;
+    display:flex;gap:0.5rem;align-items:center;margin:0.7rem 0;flex-wrap:wrap;
+    padding:0.7rem 0.9rem;
   }
-  .share-row input{flex:1;min-width:180px;font-size:0.85rem;color:var(--muted);}
+  .share-row input{flex:1;min-width:11rem;font-size:0.8rem;color:var(--muted);background:rgba(255,255,255,0.5);}
 
-  .progress-row{display:flex;align-items:center;gap:10px;margin:14px 0;}
-  .progress-bar{flex:1;height:10px;background:var(--border);border-radius:6px;overflow:hidden;}
-  .progress-fill{height:100%;background:var(--done);width:0%;transition:width .25s;}
-  .progress-text{font-size:0.85rem;color:var(--muted);white-space:nowrap;}
+  .progress-card{padding:0.9rem 1.1rem;margin:0.9rem 0;}
+  .progress-row{display:flex;align-items:center;gap:0.8rem;}
+  .progress-bar{flex:1;height:0.7rem;background:rgba(139,132,150,0.18);border-radius:999px;overflow:hidden;}
+  .progress-fill{
+    height:100%;
+    background:linear-gradient(90deg, var(--accent3), var(--done));
+    width:0%;
+    border-radius:999px;
+    transition:width .3s ease;
+  }
+  .progress-text{font-size:0.85rem;color:var(--muted);white-space:nowrap;font-weight:600;}
 
   .add-row{
-    display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 24px;
-    background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px;
+    display:flex;gap:0.5rem;flex-wrap:wrap;margin:1rem 0 1.3rem;
+    padding:0.9rem;
   }
-  .add-row input[type=text]{flex:2;min-width:140px;}
-  .add-row select{flex:1;min-width:120px;}
+  .add-row input[type=text]{flex:2;min-width:9rem;}
+  .add-row select{flex:1;min-width:8rem;}
+  .add-row button{flex-shrink:0;}
 
   .category{
-    background:var(--card);border:1px solid var(--border);border-radius:12px;
-    margin-bottom:14px;overflow:hidden;
+    margin-bottom:0.9rem;
+    overflow:hidden;
+    position:relative;
   }
+  .category::before{
+    content:"";
+    position:absolute;
+    left:0;top:0;bottom:0;
+    width:0.28rem;
+    background:linear-gradient(180deg, var(--accent1), var(--accent3));
+  }
+  .category:nth-of-type(2n)::before{background:linear-gradient(180deg, var(--accent2), var(--accent1));}
+  .category:nth-of-type(3n)::before{background:linear-gradient(180deg, var(--accent3), var(--accent2));}
+
   .category-header{
     display:flex;justify-content:space-between;align-items:center;
-    padding:12px 16px;background:#faf8f3;
+    padding:0.9rem 1.1rem 0.9rem 1.3rem;
   }
-  .category-header h2{font-size:1rem;margin:0;}
-  .category-header .count{font-size:0.8rem;color:var(--muted);}
-  .items{padding:4px 16px 12px;}
+  .category-header h2{
+    font-family:'Outfit',sans-serif;
+    font-size:1.02rem;font-weight:600;margin:0;
+  }
+  .category-header .count{
+    font-size:0.78rem;color:var(--muted);font-weight:600;
+    background:rgba(139,132,150,0.12);
+    padding:0.2rem 0.55rem;
+    border-radius:999px;
+    flex-shrink:0;
+  }
+  .items{padding:0 1.1rem 0.6rem 1.3rem;}
   .item{
-    display:flex;align-items:center;gap:10px;padding:8px 0;
-    border-bottom:1px solid var(--border);
+    display:flex;align-items:center;gap:0.75rem;padding:0.65rem 0;
+    border-bottom:1px solid rgba(139,132,150,0.14);
   }
   .item:last-child{border-bottom:none;}
-  .item input[type=checkbox]{width:18px;height:18px;accent-color:var(--done);flex-shrink:0;cursor:pointer;}
-  .item span{flex:1;font-size:0.95rem;}
-  .item.checked span{text-decoration:line-through;color:var(--muted);}
-  .item .del{background:none;color:var(--muted);padding:2px 8px;font-size:1rem;}
-  .item .del:hover{color:#c94c4c;background:none;}
-  .empty-cat{color:var(--muted);font-size:0.85rem;padding:6px 0 10px;font-style:italic;}
 
-  .footer-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px;}
-  .hint{font-size:0.8rem;color:var(--muted);margin-top:4px;}
+  .item input[type=checkbox]{
+    -webkit-appearance:none;appearance:none;
+    width:1.4rem;height:1.4rem;flex-shrink:0;
+    border-radius:50%;
+    border:2px solid rgba(123,108,240,0.45);
+    cursor:pointer;
+    display:grid;place-content:center;
+    transition:background .15s ease, border-color .15s ease, transform .1s ease;
+  }
+  .item input[type=checkbox]::before{
+    content:"";
+    width:0.6rem;height:0.6rem;
+    border-radius:50%;
+    transform:scale(0);
+    transition:transform .15s ease;
+    background:#fff;
+  }
+  .item input[type=checkbox]:checked{
+    background:linear-gradient(120deg, var(--accent3), var(--done));
+    border-color:transparent;
+  }
+  .item input[type=checkbox]:checked::before{transform:scale(1);}
+  .item input[type=checkbox]:active{transform:scale(0.9);}
+
+  .item span{flex:1;font-size:0.97rem;line-height:1.35;}
+  .item.checked span{text-decoration:line-through;color:var(--muted-light);}
+  .item .del{
+    all:unset;cursor:pointer;color:var(--muted);
+    width:1.8rem;height:1.8rem;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    border-radius:50%;font-size:1rem;
+  }
+  .item .del:hover{color:#fff;background:var(--danger);}
+  .empty-cat{color:var(--muted);font-size:0.85rem;padding:0.4rem 0 0.8rem;font-style:italic;}
+
+  .footer-actions{display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:1.3rem;}
+  .hint{font-size:0.78rem;color:var(--muted);margin-top:0.6rem;text-align:center;}
+
+  @media (max-width: 30rem){
+    header.glass{flex-direction:column;}
+    .fontctl{align-self:flex-end;}
+    .toolbar{flex-direction:column;align-items:stretch;}
+    .toolbar label{margin-bottom:-0.2rem;}
+    .toolbar select, .toolbar button{width:100%;}
+  }
 
   @media print{
-    .toolbar,.add-row,.footer-actions,.share-row{display:none;}
+    .toolbar,.add-row,.footer-actions,.share-row,.fontctl{display:none;}
     body{background:#fff;}
-    .category{break-inside:avoid;border:1px solid #ccc;}
+    .glass{background:#fff;box-shadow:none;backdrop-filter:none;}
+    .category{break-inside:avoid;border:1px solid #ddd;}
   }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header>
-    <h1>🧳 Packliste</h1>
-    <div class="sub">Abhaken, ergänzen, teilen — in Echtzeit für alle sichtbar.</div>
-    <div class="status" id="statusLine">Verbinde…</div>
+  <header class="glass">
+    <div class="title-block">
+      <h1>🧳 Packliste</h1>
+      <p class="sub">Abhaken, ergänzen, teilen — in Echtzeit für alle sichtbar.</p>
+      <div class="status" id="statusLine"><span class="dot"></span><span class="statusText">Verbinde…</span></div>
+    </div>
+    <div class="fontctl" title="Schriftgröße anpassen">
+      <button id="fontSmaller" aria-label="Schrift verkleinern">A</button>
+      <div class="divider"></div>
+      <button id="fontReset" aria-label="Schrift zurücksetzen">A</button>
+      <div class="divider"></div>
+      <button id="fontBigger" aria-label="Schrift vergrößern">A</button>
+    </div>
   </header>
 
-  <div class="toolbar">
+  <div class="toolbar glass">
     <label for="listSelect">Liste:</label>
     <select id="listSelect"></select>
     <button id="newListBtn" class="secondary">+ Neue Liste</button>
@@ -120,17 +282,19 @@
     <button id="deleteListBtn" class="danger">Löschen</button>
   </div>
 
-  <div class="share-row">
+  <div class="share-row glass">
     <input type="text" id="shareLink" readonly>
     <button id="copyLinkBtn" class="secondary">Link kopieren</button>
   </div>
 
-  <div class="progress-row">
-    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-    <div class="progress-text" id="progressText">0 / 0</div>
+  <div class="progress-card glass">
+    <div class="progress-row">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-text" id="progressText">0 / 0</div>
+    </div>
   </div>
 
-  <div class="add-row">
+  <div class="add-row glass">
     <input type="text" id="newItemText" placeholder="Neuen Artikel eingeben…">
     <select id="newItemCategory"></select>
     <button id="addItemBtn">Hinzufügen</button>
@@ -144,6 +308,28 @@
   </div>
   <div class="hint">Alle Änderungen werden live mit jedem geteilt, der diesen Link öffnet.</div>
 </div>
+
+<script>
+(function(){
+  var root = document.documentElement;
+  var KEY = "packliste_fontscale";
+  var MIN = 0.85, MAX = 1.6, STEP = 0.1;
+  var scale = parseFloat(localStorage.getItem(KEY)) || 1;
+  function apply(){ root.style.setProperty("--scale", scale.toFixed(2)); }
+  apply();
+  document.getElementById("fontSmaller").addEventListener("click", function(){
+    scale = Math.max(MIN, +(scale - STEP).toFixed(2));
+    localStorage.setItem(KEY, scale); apply();
+  });
+  document.getElementById("fontBigger").addEventListener("click", function(){
+    scale = Math.min(MAX, +(scale + STEP).toFixed(2));
+    localStorage.setItem(KEY, scale); apply();
+  });
+  document.getElementById("fontReset").addEventListener("click", function(){
+    scale = 1; localStorage.setItem(KEY, scale); apply();
+  });
+})();
+</script>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -237,6 +423,7 @@ const categoriesEl = document.getElementById("categories");
 const progressFill = document.getElementById("progressFill");
 const progressText = document.getElementById("progressText");
 const statusLine = document.getElementById("statusLine");
+const statusText = statusLine.querySelector(".statusText");
 const shareLink = document.getElementById("shareLink");
 
 let allLists = {};        // id -> {name, ...}
@@ -245,7 +432,7 @@ let activeListData = null;
 let unsubActiveList = null;
 
 function setStatus(text, live){
-  statusLine.textContent = text;
+  statusText.textContent = text;
   statusLine.className = "status " + (live ? "live" : "offline");
 }
 
@@ -304,7 +491,7 @@ function renderCategories(){
     done += entries.filter(([,it])=>it.checked).length;
 
     const catEl = document.createElement("div");
-    catEl.className = "category";
+    catEl.className = "category glass";
 
     const header = document.createElement("div");
     header.className = "category-header";
