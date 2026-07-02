@@ -153,6 +153,37 @@
     user-select:none;
   }
 
+  .floating-bar{
+    position:fixed;
+    top:0.75rem;
+    left:50%;
+    width:min(94%, 44rem);
+    z-index:200;
+    display:flex;
+    align-items:center;
+    gap:0.75rem;
+    flex-wrap:wrap;
+    padding:0.55rem 0.8rem;
+    background:var(--glass-bg-strong);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border:1px solid var(--glass-border);
+    border-radius:1.2rem;
+    box-shadow:var(--glass-shadow);
+    transform:translate(-50%, -140%);
+    opacity:0;
+    pointer-events:none;
+    transition:transform .25s ease, opacity .25s ease, background .3s ease;
+  }
+  .floating-bar.visible{
+    transform:translate(-50%, 0);
+    opacity:1;
+    pointer-events:auto;
+  }
+  .floating-bar .progress-row{flex:1;min-width:8rem;display:flex;align-items:center;gap:0.6rem;}
+  .floating-bar .progress-text{font-size:0.78rem;}
+  .floating-bar .fontctl{background:var(--chip-bg);}
+
   .toolbar{
     display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;
     padding:0.9rem;margin:0.9rem 0;
@@ -241,7 +272,12 @@
     flex-wrap:wrap;
     gap:0.5rem;
   }
-  .category-header .title-row{display:flex;align-items:center;gap:0.6rem;flex:1;min-width:8rem;}
+  .category-header .title-row{display:flex;align-items:center;gap:0.6rem;flex:1;min-width:8rem;cursor:pointer;user-select:none;}
+  .category-header .chevron{
+    display:inline-block;color:var(--muted);font-size:0.8rem;
+    transition:transform .2s ease;flex-shrink:0;width:0.9rem;
+  }
+  .category-header .chevron.collapsed{transform:rotate(-90deg);}
   .category-header h2{
     font-family:'Outfit',sans-serif;
     font-size:1.02rem;font-weight:600;margin:0;
@@ -255,7 +291,22 @@
   }
   .cat-actions{display:flex;gap:0.3rem;flex-shrink:0;}
 
+  .cat-progress{
+    height:0.35rem;
+    background:var(--chip-bg);
+    border-radius:999px;
+    overflow:hidden;
+    margin:0 1.1rem 0.7rem 1.3rem;
+  }
+  .cat-progress-fill{
+    height:100%;
+    background:linear-gradient(90deg, var(--accent3), var(--done));
+    border-radius:999px;
+    transition:width .3s ease;
+  }
+
   .items{padding:0 1.1rem 0.8rem 1.3rem;}
+  .items.collapsed{display:none;}
   .item{
     display:flex;align-items:center;gap:0.75rem;padding:0.65rem 0;
     border-bottom:1px solid var(--divider);
@@ -324,10 +375,11 @@
   }
 
   @media print{
-    .toolbar,.footer-actions,.share-row,.fontctl,.theme-toggle,.cat-toolbar,.cat-actions,.add-in-cat{display:none;}
+    .toolbar,.footer-actions,.share-row,.fontctl,.theme-toggle,.cat-toolbar,.cat-actions,.add-in-cat,.floating-bar{display:none;}
     body{background:#fff;}
     .glass{background:#fff;box-shadow:none;backdrop-filter:none;}
     .category{break-inside:avoid;border:1px solid #ddd;}
+    .items.collapsed{display:block !important;}
   }
 </style>
 </head>
@@ -342,12 +394,24 @@
     <div class="header-controls">
       <button class="theme-toggle" id="themeToggle" aria-label="Darstellung umschalten">🌙</button>
       <div class="fontctl" title="Schriftgröße anpassen">
-        <button id="fontSmaller" aria-label="Schrift verkleinern">−</button>
-        <span class="fontctl-value" id="fontValue" title="Zurücksetzen">100%</span>
-        <button id="fontBigger" aria-label="Schrift vergrößern">+</button>
+        <button class="js-font-smaller" aria-label="Schrift verkleinern">−</button>
+        <span class="fontctl-value js-font-value" title="Zurücksetzen">100%</span>
+        <button class="js-font-bigger" aria-label="Schrift vergrößern">+</button>
       </div>
     </div>
   </header>
+
+  <div class="floating-bar" id="floatingBar">
+    <div class="progress-row">
+      <div class="progress-bar"><div class="progress-fill js-progress-fill"></div></div>
+      <div class="progress-text js-progress-text">0 / 0</div>
+    </div>
+    <div class="fontctl" title="Schriftgröße anpassen">
+      <button class="js-font-smaller" aria-label="Schrift verkleinern">−</button>
+      <span class="fontctl-value js-font-value" title="Zurücksetzen">100%</span>
+      <button class="js-font-bigger" aria-label="Schrift vergrößern">+</button>
+    </div>
+  </div>
 
   <div class="toolbar glass">
     <label for="listSelect">Liste:</label>
@@ -365,8 +429,8 @@
 
   <div class="progress-card glass">
     <div class="progress-row">
-      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-      <div class="progress-text" id="progressText">0 / 0</div>
+      <div class="progress-bar"><div class="progress-fill js-progress-fill"></div></div>
+      <div class="progress-text js-progress-text">0 / 0</div>
     </div>
   </div>
 
@@ -388,27 +452,46 @@
 (function(){
   var root = document.documentElement;
 
-  // Font scale
+  // Font scale (multiple synced instances: header + floating bar)
   var SCALE_KEY = "packliste_fontscale";
   var MIN = 0.75, MAX = 1.8, STEP = 0.05;
   var scale = parseFloat(localStorage.getItem(SCALE_KEY)) || 1;
-  var fontValueEl = document.getElementById("fontValue");
   function applyScale(){
     root.style.setProperty("--scale", scale.toFixed(2));
-    fontValueEl.textContent = Math.round(scale * 100) + "%";
+    document.querySelectorAll(".js-font-value").forEach(function(el){
+      el.textContent = Math.round(scale * 100) + "%";
+    });
   }
   applyScale();
-  document.getElementById("fontSmaller").addEventListener("click", function(){
-    scale = Math.max(MIN, +(scale - STEP).toFixed(2));
-    localStorage.setItem(SCALE_KEY, scale); applyScale();
+  document.querySelectorAll(".js-font-smaller").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      scale = Math.max(MIN, +(scale - STEP).toFixed(2));
+      localStorage.setItem(SCALE_KEY, scale); applyScale();
+    });
   });
-  document.getElementById("fontBigger").addEventListener("click", function(){
-    scale = Math.min(MAX, +(scale + STEP).toFixed(2));
-    localStorage.setItem(SCALE_KEY, scale); applyScale();
+  document.querySelectorAll(".js-font-bigger").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      scale = Math.min(MAX, +(scale + STEP).toFixed(2));
+      localStorage.setItem(SCALE_KEY, scale); applyScale();
+    });
   });
-  fontValueEl.addEventListener("click", function(){
-    scale = 1; localStorage.setItem(SCALE_KEY, scale); applyScale();
+  document.querySelectorAll(".js-font-value").forEach(function(el){
+    el.addEventListener("click", function(){
+      scale = 1; localStorage.setItem(SCALE_KEY, scale); applyScale();
+    });
   });
+
+  // Floating bar: show once the header has scrolled out of view
+  var headerEl = document.querySelector("header.glass");
+  var floatingBar = document.getElementById("floatingBar");
+  if(headerEl && floatingBar && "IntersectionObserver" in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        floatingBar.classList.toggle("visible", !entry.isIntersecting);
+      });
+    }, { threshold: 0 });
+    io.observe(headerEl);
+  }
 
   // Theme
   var THEME_KEY = "packliste_theme";
@@ -521,17 +604,42 @@ function defaultSommerurlaub(){
 
 const listSelect = document.getElementById("listSelect");
 const categoriesEl = document.getElementById("categories");
-const progressFill = document.getElementById("progressFill");
-const progressText = document.getElementById("progressText");
 const statusLine = document.getElementById("statusLine");
 const statusText = statusLine.querySelector(".statusText");
 const shareLink = document.getElementById("shareLink");
+
+function setProgress(done, total){
+  const pct = total ? (done/total*100)+"%" : "0%";
+  document.querySelectorAll(".js-progress-fill").forEach(el => el.style.width = pct);
+  document.querySelectorAll(".js-progress-text").forEach(el => el.textContent = `${done} / ${total}`);
+}
 
 let allLists = {};        // id -> {name, ...}
 let activeListId = null;
 let activeListData = null;
 let unsubActiveList = null;
 const draftInputs = {};   // category name -> in-progress "add item" text
+let collapsedSet = new Set(); // category names collapsed for the current list (local, per device)
+
+function collapsedStorageKey(id){ return "packliste_collapsed_" + id; }
+
+function loadCollapsed(id){
+  try{
+    const raw = localStorage.getItem(collapsedStorageKey(id));
+    collapsedSet = new Set(raw ? JSON.parse(raw) : []);
+  }catch(e){ collapsedSet = new Set(); }
+}
+
+function saveCollapsed(){
+  if(!activeListId) return;
+  localStorage.setItem(collapsedStorageKey(activeListId), JSON.stringify([...collapsedSet]));
+}
+
+function toggleCategoryCollapsed(cat){
+  if(collapsedSet.has(cat)) collapsedSet.delete(cat); else collapsedSet.add(cat);
+  saveCollapsed();
+  renderCategories();
+}
 
 function setStatus(text, live){
   statusText.textContent = text;
@@ -581,7 +689,7 @@ function renderCategories(){
   }
 
   categoriesEl.innerHTML = "";
-  if(!activeListData){ progressFill.style.width = "0%"; progressText.textContent = "0 / 0"; return; }
+  if(!activeListData){ setProgress(0, 0); return; }
 
   const order = currentOrder();
   const categories = activeListData.categories || {};
@@ -590,8 +698,10 @@ function renderCategories(){
   order.forEach((cat, idx)=>{
     const itemsObj = categories[cat] || {};
     const entries = Object.entries(itemsObj);
+    const catDone = entries.filter(([,it])=>it.checked).length;
     total += entries.length;
-    done += entries.filter(([,it])=>it.checked).length;
+    done += catDone;
+    const isCollapsed = collapsedSet.has(cat);
 
     const catEl = document.createElement("div");
     catEl.className = "category glass";
@@ -601,11 +711,16 @@ function renderCategories(){
 
     const titleRow = document.createElement("div");
     titleRow.className = "title-row";
+    titleRow.addEventListener("click", ()=> toggleCategoryCollapsed(cat));
+    const chevron = document.createElement("span");
+    chevron.className = "chevron" + (isCollapsed ? " collapsed" : "");
+    chevron.textContent = "▾";
     const h2 = document.createElement("h2");
     h2.textContent = cat;
     const count = document.createElement("span");
     count.className = "count";
-    count.textContent = `${entries.filter(([,it])=>it.checked).length}/${entries.length}`;
+    count.textContent = `${catDone}/${entries.length}`;
+    titleRow.appendChild(chevron);
     titleRow.appendChild(h2);
     titleRow.appendChild(count);
     header.appendChild(titleRow);
@@ -639,8 +754,16 @@ function renderCategories(){
 
     catEl.appendChild(header);
 
+    const catProgress = document.createElement("div");
+    catProgress.className = "cat-progress";
+    const catProgressFill = document.createElement("div");
+    catProgressFill.className = "cat-progress-fill";
+    catProgressFill.style.width = entries.length ? (catDone/entries.length*100)+"%" : "0%";
+    catProgress.appendChild(catProgressFill);
+    catEl.appendChild(catProgress);
+
     const itemsEl = document.createElement("div");
-    itemsEl.className = "items";
+    itemsEl.className = "items" + (isCollapsed ? " collapsed" : "");
 
     if(entries.length === 0){
       const empty = document.createElement("div");
@@ -706,8 +829,7 @@ function renderCategories(){
     }
   }
 
-  progressFill.style.width = total ? (done/total*100)+"%" : "0%";
-  progressText.textContent = `${done} / ${total}`;
+  setProgress(done, total);
 }
 
 async function toggleItem(cat, itemId, checked){
@@ -786,6 +908,7 @@ async function moveCategory(name, direction){
 function watchActiveList(id){
   if(unsubActiveList) unsubActiveList();
   activeListId = id;
+  loadCollapsed(id);
   setListIdInUrl(id);
   unsubActiveList = onSnapshot(doc(db, "lists", id), (snap)=>{
     if(!snap.exists()){ activeListData = null; renderCategories(); return; }
